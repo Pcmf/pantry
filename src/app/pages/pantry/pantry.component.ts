@@ -1,21 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ProductComponent } from "../../components/product/product.component";
+import { AppStore } from '../../store/app.store';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pantry',
-  imports: [ProductComponent],
+  imports: [ProductComponent, CommonModule],
   templateUrl: './pantry.component.html',
   styleUrl: './pantry.component.scss'
 })
 export class PantryComponent {
-  item = {
-    id: '1',
-    name: 'Milk',
-    quantity: 2,
-    categoryIcon: '🥛'
-  };
+  readonly store = inject(AppStore);
+  readonly router = inject(Router);
+
 
   onEdit(productId: string) {
-    console.log('Edit product with ID:', productId);
+    console.log('Editing product with ID:', productId);
+    this.router.navigate(['/edit', productId]);
+  }
+
+  addNewProduct() {
+    this.router.navigate(['/edit', 'new']);
   }
 }

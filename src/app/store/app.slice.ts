@@ -7,7 +7,7 @@ export interface PantrySlice{
 }
 
 export const initialPantrySlice: PantrySlice = {
-  pantryId: null,
-  pantryName: null,
+  pantryId: 'my_pantry',
+  pantryName: 'My Pantry',
   products: []
 };

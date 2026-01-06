@@ -1,0 +1,52 @@
+.edit { padding: 16px; }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .back {
+      background: none;
+      border: none;
+      font-size: 20px;
+      padding: 8px;
+    }
+    .form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    label {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 14px;
+    }
+    input, select {
+      height: 44px;
+      font-size: 16px;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+    }
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .save {
+      flex: 1;
+      background: #111827;
+      color: white;
+      border: none;
+      height: 44px;
+      border-radius: 8px;
+    }
+    .delete {
+      border: 1px solid #ef4444;
+      color: #ef4444;
+      background: none;
+      height: 44px;
+      border-radius: 8px;
+      padding: 0 16px;
+    }
