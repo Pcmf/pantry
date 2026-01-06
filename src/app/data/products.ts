@@ -1,0 +1,14 @@
+import { Product } from "../models/pantry.models";
+
+export const PRODUCTS: Product[] = [
+  { id: '1', name: 'Apple', categoryId: '1' },
+  { id: '2', name: 'Banana', categoryId: '1' },
+  { id: '3', name: 'Carrot', categoryId: '2' },
+  { id: '4', name: 'Broccoli', categoryId: '2' },
+  { id: '5', name: 'Milk', categoryId: '3' },
+  { id: '6', name: 'Cheese', categoryId: '3' },
+  { id: '7', name: 'Chicken', categoryId: '4' },
+  { id: '8', name: 'Beef', categoryId: '4' },
+  { id: '9', name: 'Rice', categoryId: '5' },
+  { id: '10', name: 'Bread', categoryId: '5' },
+];

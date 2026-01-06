@@ -1,0 +1,24 @@
+<div class="product">
+      <!-- Category Icon -->
+      <div class="icon">
+        {{ item.categoryIcon }}
+      </div>
+
+      <!-- Product Info -->
+      <div class="info">
+        <div class="name">{{ item.name }}</div>
+        <div class="quantity">
+          Qty: <strong>{{ item.quantity }}</strong>
+        </div>
+      </div>
+
+      <!-- Edit Button -->
+      <button
+        type="button"
+        class="edit"
+        aria-label="Edit product"
+        (click)="edit.emit(item.id)"
+      >
+        ✏️
+      </button>
+</div>

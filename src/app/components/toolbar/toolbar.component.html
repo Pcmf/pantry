@@ -1,0 +1,24 @@
+<header class="toolbar">
+      <!-- App icon / Home -->
+      <a routerLink="/" class="logo" aria-label="Home">
+        🥫
+      </a>
+
+      <!-- Navigation -->
+      <nav class="nav">
+        <a
+          routerLink="/"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          Home
+        </a>
+
+        <a
+          routerLink="/settings"
+          routerLinkActive="active"
+        >
+          Settings
+        </a>
+      </nav>
+    </header>

@@ -1,0 +1,9 @@
+import { Category } from "../models/pantry.models";
+
+export const CATEGORIES: Category[] = [
+  { id: '1', name: 'Fruits', icon: '🍎' },
+  { id: '2', name: 'Vegetables', icon: '🥦' },
+  { id: '3', name: 'Dairy', icon: '🥛' },
+  { id: '4', name: 'Meat', icon: '🥩' },
+  { id: '5', name: 'Grains', icon: '🌾' },
+];
