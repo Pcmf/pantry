@@ -1,44 +1,39 @@
-import { patchState, signalStore, withHooks, withMethods, withProps, withState } from "@ngrx/signals";
+import { patchState, signalStore, withComputed, withHooks, withMethods, withState } from "@ngrx/signals";
 import { initialPantrySlice } from "./app.slice";
-import { computed, effect, inject, Signal } from "@angular/core";
-import { ProductsService, ProductViewModel } from "../services/products.service";
-import { updateProduct } from "./app.helpers";
+import { computed, effect } from "@angular/core";
+import { createPantryListItemViewModel } from "./app-vm.builders";
+import { PRODUCTS } from "../data/products";
+import { CATEGORIES } from "../data/categories";
+import * as updaters from "./app.updaters";
+import { ProductViewModel } from "../components/product/view-model/product.vm";
 
 export const AppStore = signalStore(
-    { providedIn: 'root' },
-    withState(initialPantrySlice),
-    withProps(_ => ({
-      pantryName: 'My Pantry',
-      pantryId: '1',
-      productsService: inject(ProductsService)
-    })),
-
-    withMethods(store => ({
-      updateProduct: (product: ProductViewModel) => (
-          patchState(store, updateProduct(product))
-      )
-    })),
-
-    withHooks((store) => ({
+  { providedIn: 'root' },
+  withState(initialPantrySlice),
+  withComputed((store) => ({
+    products: computed(() => createPantryListItemViewModel(
+      PRODUCTS,
+      CATEGORIES,
+      store.searchQuery(),
+    )),
+  })),
+  withMethods(store => ({
+    setSearchQuery: (searchQuery: string) => patchState(store, updaters.setSearchQuery(searchQuery)),
+    updateProduct: (product: ProductViewModel) => patchState(store, updaters.updateProduct(product)),
+    saveProduct: (product: ProductViewModel) => patchState(store, updaters.saveProduct(product)),
+  })),
+    withHooks(store => ({
       onInit() {
-        //initialize products from service
-        const products = store.productsService.getProducts();
-        patchState(store, { products });
-        //create a signal with products to persist to local storage on changes
-        const persistedProducts: Signal<ProductViewModel[]> = computed(() => (store.products()));
-
-        const productsLocalStore = localStorage.getItem('pantry_products');
-        if (productsLocalStore) {
-          const products = JSON.parse(productsLocalStore) as ProductViewModel[];
-          patchState(store, { products });
+        const persist = computed(() => store.products());
+        const storeInLoalStorage = localStorage.getItem('appStore');
+        if (storeInLoalStorage) {
+          const parsedStore = JSON.parse(storeInLoalStorage);
+          patchState(store, parsedStore);
         }
-        //when products change, persist to local storage
         effect(() => {
-          const products = persistedProducts().sort((a, b) => a.name.localeCompare(b.name));
-          localStorage.setItem('pantry_products', JSON.stringify(products));
+          localStorage.setItem('appStore', JSON.stringify(persist()));
         });
-      }
-    }),
-  )
 
-)
+    }
+  }))
+);

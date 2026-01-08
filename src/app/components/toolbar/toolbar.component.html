@@ -3,6 +3,12 @@
       <a routerLink="/" class="logo" aria-label="Home">
         🥫
       </a>
+      <strong>{{ name() }}</strong>
+      <input
+        type="text"
+        placeholder="Search..."
+        (input)="onSearch($any($event.target).value)"
+      />
 
       <!-- Navigation -->
       <nav class="nav">

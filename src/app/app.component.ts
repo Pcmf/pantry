@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ToolbarComponent } from "./components/toolbar/toolbar.component";
+import { AppStore } from './store/app.store';
 
 @Component({
   selector: 'app-root',
@@ -10,4 +11,10 @@ import { ToolbarComponent } from "./components/toolbar/toolbar.component";
 })
 export class AppComponent {
   title = 'Pantry';
+
+  readonly store = inject(AppStore);
+  onSearch(query: string) {
+    console.log('AppComponent received search query:', query);
+    this.store.setSearchQuery(query);
+  }
 }

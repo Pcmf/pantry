@@ -1,13 +1,15 @@
-import { ProductViewModel } from "../services/products.service";
+import { ProductViewModel } from "../components/product/view-model/product.vm";
 
 export interface PantrySlice{
   pantryId: string | null;
   pantryName: string | null;
-  products: ProductViewModel[];
+  searchQuery: string;
+  products: Record<string, ProductViewModel>;
 }
 
 export const initialPantrySlice: PantrySlice = {
   pantryId: 'my_pantry',
   pantryName: 'My Pantry',
-  products: []
+  searchQuery: '',
+  products: {}
 };

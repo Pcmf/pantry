@@ -1,8 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit } from '@angular/core';
 import { AppStore } from '../../store/app.store';
 import { ActivatedRoute } from '@angular/router';
 import { CATEGORIES } from '../../data/categories';
 import { CommonModule } from '@angular/common';
+import { Product } from '../../models/pantry.models';
+import { ProductViewModel } from '../../components/product/view-model/product.vm';
 
 @Component({
   selector: 'app-product-form',
@@ -11,32 +13,40 @@ import { CommonModule } from '@angular/common';
   styleUrl: './product-form.component.scss',
 })
 export class ProductFormComponent implements OnInit {
-  private readonly store = inject(AppStore);
+  readonly store = inject(AppStore);
   readonly route = inject(ActivatedRoute);
 
-  product = this.store.products().find((p) => p.id === this.route.snapshot.params['id']) || null;
+  private id = this.route.snapshot.params['id'];
+  product =  Object.values(this.store.products()).find((p) => p.id === this.id) ||
+      null;
   public categories = CATEGORIES;
+
 
   ngOnInit() {
     if (this.route.snapshot.params['id'] === 'new') {
       //initialize a new product
-      const newProductId = (this.store.products().length + 1).toString();
       this.product = {
-        id: newProductId,
+        id: crypto.randomUUID(),
         name: '',
         quantity: 0,
         categoryId: this.categories[0].id,
-        categoryIcon: this.categories[0].icon
+        categoryIcon: this.categories[0].icon,
+        expiryDate: new Date(),
+        lastUpdated: new Date(),
       };
     }
-   }
+  }
 
   close() {
     window.history.back();
   }
 
   save() {
-    this.store.updateProduct(this.product!);
+    if (this.id !== 'new') {
+      this.store.updateProduct(this.product!);
+    } else {
+      this.store.saveProduct(this.product!);
+    }
     window.history.back();
   }
   remove() {
@@ -44,7 +54,7 @@ export class ProductFormComponent implements OnInit {
   }
 
   updateCategory(categoryId: string) {
-    const icon = this.categories.find(c => c.id === categoryId)?.icon || '';
+    const icon = this.categories.find((c) => c.id === categoryId)?.icon || '';
     this.product!.categoryIcon = icon;
     this.product!.categoryId = categoryId;
   }

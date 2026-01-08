@@ -1,3 +1,4 @@
+@let item = product();
 <div class="product">
       <!-- Category Icon -->
       <div class="icon">
@@ -9,6 +10,9 @@
         <div class="name">{{ item.name }}</div>
         <div class="quantity">
           Qty: <strong>{{ item.quantity }}</strong>
+        </div>
+        <div class="expiry">
+          Expires: <strong>{{ item?.expiryDate | date: 'mediumDate' }}</strong>
         </div>
       </div>
 
