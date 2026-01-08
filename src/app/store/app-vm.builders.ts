@@ -13,9 +13,13 @@ export function createPantryListItemViewModel(
 
   return filterProductsBySearchQuery(Object.values(productModels), searchQuery);
 
+
+
+
   function filterProductsBySearchQuery(products: ProductViewModel[], searchQuery: string): Record<string, ProductViewModel> {
     const lowerCaseQuery = searchQuery.toLowerCase();
     const filteredProducts = products.filter(product => product.name.toLowerCase().includes(lowerCaseQuery));
+    console.log(filteredProducts);
 
     return Object.fromEntries(filteredProducts.map(product => [product.id, product]));
   }
