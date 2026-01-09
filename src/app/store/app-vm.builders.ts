@@ -1,6 +1,6 @@
 import { Category, Product } from "../models/pantry.models";
-import { PantryItemViewModel } from "../pages/pantry/view-model/pantry-item.vm";
 import { ProductViewModel } from "../components/product/view-model/product.vm";
+import { sortRecordByProp } from "../helpers/order.helper";
 
 export function createPantryListItemViewModel(
   products: Product[],
@@ -8,39 +8,40 @@ export function createPantryListItemViewModel(
   searchQuery: string
 ): Record<string, ProductViewModel> {
 
-  const orderedProducts = products.sort((a, b) => a.name.localeCompare(b.name));
-  console.log(orderedProducts);
+  const productModels = createProductModelView(products, categories);
 
+  const filtered =  filterProductsBySearchQuery(productModels, searchQuery);
 
-  const productModels = createProductModelView(orderedProducts, categories);
+  const orderedList = sortRecordByProp(filtered, (product) => product.categoryId, 'asc');
+  console.log('orderedList', orderedList);
 
-  return filterProductsBySearchQuery(Object.values(productModels), searchQuery);
+  return orderedList;
 
+//FUNCTIONS
 
+  function createProductModelView(products: Product[], categories: Category[]): ProductViewModel[] {
 
+    const productsMv = products
+      .map((product) => ({
+        id: crypto.randomUUID(),
+        name: product.name,
+        quantity: 0,
+        expiryDate: new Date(),
+        lastUpdated: new Date(),
+        categoryId: product.categoryId,
+        categoryIcon: categories.find(cat => cat.id === product.categoryId)?.icon || ''
+      })
+    );
+
+    return productsMv;
+  }
 
   function filterProductsBySearchQuery(products: ProductViewModel[], searchQuery: string): Record<string, ProductViewModel> {
     const lowerCaseQuery = searchQuery.toLowerCase();
     const filteredProducts = products.filter(product => product.name.toLowerCase().includes(lowerCaseQuery));
 
-    return Object.fromEntries(filteredProducts.map(product => [crypto.randomUUID(), product]));
+    return Object.fromEntries(filteredProducts.map(product => [product.id, product]));
   }
 
-
-  function createProductModelView(products: Product[], categories: Category[]): Record<string, ProductViewModel> {
-    return Object.fromEntries(
-      products.map(product => [product.id, {
-        ...product,
-        quantity:  0,
-        expiryDate: new Date(),
-        lastUpdated: new Date(),
-        categoryId: product.categoryId,
-        categoryIcon: categories.find(cat => cat.id === product.categoryId)?.icon || ''
-      }])
-    );
-  }
 }
-
-
-
 
