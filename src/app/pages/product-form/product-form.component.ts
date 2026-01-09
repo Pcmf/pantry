@@ -1,10 +1,8 @@
-import { Component, computed, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { AppStore } from '../../store/app.store';
 import { ActivatedRoute } from '@angular/router';
 import { CATEGORIES } from '../../data/categories';
 import { CommonModule } from '@angular/common';
-import { Product } from '../../models/pantry.models';
-import { ProductViewModel } from '../../components/product/view-model/product.vm';
 
 @Component({
   selector: 'app-product-form',
@@ -16,7 +14,7 @@ export class ProductFormComponent implements OnInit {
   readonly store = inject(AppStore);
   readonly route = inject(ActivatedRoute);
 
-  private id = this.route.snapshot.params['id'];
+  private readonly id = this.route.snapshot.params['id'];
   product =  Object.values(this.store.products()).find((p) => p.id === this.id) ||
       null;
   public categories = CATEGORIES;
@@ -42,13 +40,10 @@ export class ProductFormComponent implements OnInit {
   }
 
   save() {
-    if (this.id !== 'new') {
-      this.store.updateProduct(this.product!);
-    } else {
-      this.store.saveProduct(this.product!);
-    }
+    this.store.updateProductList(this.product!);
     window.history.back();
   }
+
   remove() {
     throw new Error('Method not implemented.');
   }

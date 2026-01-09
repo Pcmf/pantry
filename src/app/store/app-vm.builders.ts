@@ -8,8 +8,11 @@ export function createPantryListItemViewModel(
   searchQuery: string
 ): Record<string, ProductViewModel> {
 
+  const orderedProducts = products.sort((a, b) => a.name.localeCompare(b.name));
+  console.log(orderedProducts);
 
-  const productModels = createProductModelView(products, categories);
+
+  const productModels = createProductModelView(orderedProducts, categories);
 
   return filterProductsBySearchQuery(Object.values(productModels), searchQuery);
 
@@ -19,9 +22,8 @@ export function createPantryListItemViewModel(
   function filterProductsBySearchQuery(products: ProductViewModel[], searchQuery: string): Record<string, ProductViewModel> {
     const lowerCaseQuery = searchQuery.toLowerCase();
     const filteredProducts = products.filter(product => product.name.toLowerCase().includes(lowerCaseQuery));
-    console.log(filteredProducts);
 
-    return Object.fromEntries(filteredProducts.map(product => [product.id, product]));
+    return Object.fromEntries(filteredProducts.map(product => [crypto.randomUUID(), product]));
   }
 
 
@@ -29,7 +31,7 @@ export function createPantryListItemViewModel(
     return Object.fromEntries(
       products.map(product => [product.id, {
         ...product,
-        quantity: 0,
+        quantity:  0,
         expiryDate: new Date(),
         lastUpdated: new Date(),
         categoryId: product.categoryId,
@@ -38,3 +40,7 @@ export function createPantryListItemViewModel(
     );
   }
 }
+
+
+
+

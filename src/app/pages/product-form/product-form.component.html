@@ -40,6 +40,16 @@
       />
     </label>
 
+    <label>
+      Expiration date
+      <input
+        type="date"
+        [value]="product.expiryDate"
+        (input)="product.expiryDate = $any($event.target).value"
+      />
+    </label>
+
+
     <!-- Actions -->
     <div class="actions">
       <button class="save" (click)="save()">Save</button>

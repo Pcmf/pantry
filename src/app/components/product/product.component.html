@@ -1,4 +1,5 @@
 @let item = product();
+
 <div class="product">
       <!-- Category Icon -->
       <div class="icon">
@@ -11,9 +12,17 @@
         <div class="quantity">
           Qty: <strong>{{ item.quantity }}</strong>
         </div>
-        <div class="expiry">
-          Expires: <strong>{{ item?.expiryDate | date: 'mediumDate' }}</strong>
+        @if(item.quantity) {
+        <div class="expiry" [ngClass]="deadline()">
+          Expires:
+          @if(dueDays() >= 7) {
+           <strong>{{ item?.expiryDate | date: 'mediumDate' }}</strong>
+          }
+          @else {
+            <strong> in {{ dueDays() }} day(s)</strong>
+          }
         </div>
+        }
       </div>
 
       <!-- Edit Button -->

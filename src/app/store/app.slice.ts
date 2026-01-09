@@ -5,11 +5,13 @@ export interface PantrySlice{
   pantryName: string | null;
   searchQuery: string;
   products: Record<string, ProductViewModel>;
+  productsView: Record<string, ProductViewModel>;
 }
 
 export const initialPantrySlice: PantrySlice = {
   pantryId: 'my_pantry',
   pantryName: 'My Pantry',
   searchQuery: '',
-  products: {}
+  products: {},
+  productsView: {},
 };

@@ -1,4 +1,4 @@
-@let products = store.products() | keyvalue;
+@let products = store.productsView() | keyvalue;
 
 @for (item of products; track item.key) {
   <app-product [product]="item.value" (edit)="onEdit($event)"></app-product>

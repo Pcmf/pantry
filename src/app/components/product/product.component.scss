@@ -46,3 +46,13 @@
     .edit:active {
       background: #f3f4f6;
     }
+
+    .within-deadline {
+      color: green;
+    }
+    .warning-deadline {
+      color: orange;
+    }
+    .expired {
+      color: red;
+    }
