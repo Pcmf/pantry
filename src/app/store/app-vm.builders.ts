@@ -6,16 +6,13 @@ export function createPantryListItemViewModel(
   products: Product[],
   categories: Category[],
   searchQuery: string
-): Record<string, ProductViewModel> {
+): ProductViewModel[] {
 
   const productModels = createProductModelView(products, categories);
 
   const filtered =  filterProductsBySearchQuery(productModels, searchQuery);
 
-  const orderedList = sortRecordByProp(filtered, (product) => product.categoryId, 'asc');
-  console.log('orderedList', orderedList);
-
-  return orderedList;
+  return filtered;
 
 //FUNCTIONS
 
@@ -36,11 +33,11 @@ export function createPantryListItemViewModel(
     return productsMv;
   }
 
-  function filterProductsBySearchQuery(products: ProductViewModel[], searchQuery: string): Record<string, ProductViewModel> {
+  function filterProductsBySearchQuery(products: ProductViewModel[], searchQuery: string): ProductViewModel[] {
     const lowerCaseQuery = searchQuery.toLowerCase();
     const filteredProducts = products.filter(product => product.name.toLowerCase().includes(lowerCaseQuery));
 
-    return Object.fromEntries(filteredProducts.map(product => [product.id, product]));
+    return filteredProducts;
   }
 
 }

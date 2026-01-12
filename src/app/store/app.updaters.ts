@@ -13,30 +13,35 @@ export function updateProductList(
 ): PartialStateUpdater<PantrySlice> {
   console.log('Updating product:', product);
 
-  return (state) => ({
-    products: ({ ...state.products, [product.id]: product }),
-    productsView: { ...state.productsView, [product.id]: product },
-  });
-}
+  return (state) => {
+      //check if product exists and if so get the index
+      const productIndex = state.products.findIndex(p => p.id === product.id);
+      if (productIndex !== -1) {
+        //update the product
+        const updatedProducts = [...state.products];
+        updatedProducts[productIndex] = product;
 
-export function saveProduct(
-  product: ProductViewModel
-): PartialStateUpdater<PantrySlice> {
-  console.log('Saving new product:', product);
+        return {
+          products: updatedProducts.sort((a, b) => a.name.localeCompare(b.name)),
+          productsView: updatedProducts.sort((a, b) => a.name.localeCompare(b.name))
+        };
+      }
+      //if product doesn't exist, add it
+      return {
+        products: [...state.products, product].sort((a, b) => a.name.localeCompare(b.name)),
+        productsView: [...state.productsView, product].sort((a, b) => a.name.localeCompare(b.name))
+      }
+    };
+  };
 
-  return (state) => ({
-    products: { ...state.products, [product.id]: product },
-    productsView: { ...state.productsView, [product.id]: product },
-  });
-}
 
 export function updatePantryListItemViewModel(
-  products: Record<string, ProductViewModel>,
+  products: ProductViewModel[],
   searchQuery: string
-): Record<string, ProductViewModel> {
+): ProductViewModel[] {
 
   const lowerCaseQuery = searchQuery.toLowerCase();
-  const filteredProducts = Object.values(products).filter(product => product.name.toLowerCase().includes(lowerCaseQuery));
+  const filteredProducts = products.filter(product => product.name.toLowerCase().includes(lowerCaseQuery));
 
-  return Object.fromEntries(filteredProducts.map(product => [product.id, product]));
+  return filteredProducts;
 }

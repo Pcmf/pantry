@@ -4,14 +4,14 @@ export interface PantrySlice{
   pantryId: string | null;
   pantryName: string | null;
   searchQuery: string;
-  products: Record<string, ProductViewModel>;
-  productsView: Record<string, ProductViewModel>;
+  products: ProductViewModel[];
+  productsView: ProductViewModel[];
 }
 
 export const initialPantrySlice: PantrySlice = {
   pantryId: 'my_pantry',
   pantryName: 'My Pantry',
   searchQuery: '',
-  products: {},
-  productsView: {},
+  products: [],
+  productsView: [],
 };

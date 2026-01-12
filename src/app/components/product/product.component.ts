@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, computed, EventEmitter, input, Input, linkedSignal, Output } from '@angular/core';
+import { Component, computed, input, linkedSignal, output } from '@angular/core';
 import { ProductViewModel } from './view-model/product.vm';
 import { diffInDaysFromToday } from '../../helpers/date.helper';
 
@@ -10,8 +10,8 @@ import { diffInDaysFromToday } from '../../helpers/date.helper';
   styleUrl: './product.component.scss'
 })
 export class ProductComponent {
-  product = input.required<ProductViewModel>();
-  @Output() edit = new EventEmitter<string>();
+  readonly product = input.required<ProductViewModel>({});
+  readonly edit = output<string>();
 
   readonly dueDays = linkedSignal(() =>
     diffInDaysFromToday(this.product().expiryDate!)
