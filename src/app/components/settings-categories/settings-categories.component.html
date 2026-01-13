@@ -1,0 +1,35 @@
+<section class="settings-section">
+  @let categories = store.categories();
+
+<section class="settings-categories">
+  <header class="settings-header">
+    <button type="button" class="btn primary" (click)="addCategory()">
+      ➕ Add Category
+    </button>
+  </header>
+    @if(categories.length === 0) {
+      <p class="empty-state">
+        There are no Categories defined yet
+      </p>
+    }
+    @else {
+      <ul class="category-list">
+        @for (category of categories; track category.id) {
+          <li class="category-item">
+            <span class="icon">{{ category.icon}}</span>
+            <span class="name">{{ category.name }}</span>
+
+            <button
+              type="button"
+              class="btn ghost"
+              (click)="editCategory(category)"
+            >
+              ✏️
+            </button>
+          </li>
+        }
+      </ul>
+    }
+
+</section>
+

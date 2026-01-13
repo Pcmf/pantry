@@ -23,7 +23,7 @@ export function createPantryListItemViewModel(
         id: crypto.randomUUID(),
         name: product.name,
         quantity: 0,
-        expiryDate: new Date(),
+        expiryDate: undefined,
         lastUpdated: new Date(),
         categoryId: product.categoryId,
         categoryIcon: categories.find(cat => cat.id === product.categoryId)?.icon || ''

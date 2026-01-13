@@ -28,7 +28,6 @@ export const AppStore = signalStore(
           CATEGORIES,
           '',
         ));
-        console.log('initializing products',products());
         patchState(store, { products: products().sort((a, b) => a.name.localeCompare(b.name)), productsView: products().sort((a, b) => a.name.localeCompare(b.name)) });
 
         //create a signal with products to persist to local storage on changes()

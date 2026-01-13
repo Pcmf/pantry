@@ -1,0 +1,26 @@
+<div class="modal">
+<h2>{{ data ? 'Edit category' : 'Add category' }}</h2>
+<label>
+  Name
+  <input
+    type="text"
+    [value]="name()"
+    (input)="name.set($any($event.target).value)"
+  />
+</label>
+
+<label>
+  Icon (emoji)
+  <input
+    type="text"
+    [value]="icon()"
+    (input)="icon.set($any($event.target).value)"
+  />
+</label>
+
+<footer>
+  <button (click)="cancel()">Cancel</button>
+  <button (click)="saveCat()">Save</button>
+</footer>
+</div>
+

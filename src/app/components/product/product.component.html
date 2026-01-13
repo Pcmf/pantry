@@ -1,6 +1,6 @@
-@let item = product();
 
 <div class="product">
+  @let item = product();
       <!-- Category Icon -->
       <div class="icon">
         {{ item.categoryIcon }}
@@ -12,7 +12,7 @@
         <div class="quantity">
           Qty: <strong>{{ item.quantity }}</strong>
         </div>
-        @if(item.quantity) {
+        @if(item.quantity && item.expiryDate) {
         <div class="expiry" [ngClass]="deadline()">
           Expires:
           @if(dueDays() >= 7) {
@@ -24,6 +24,12 @@
         </div>
         }
       </div>
+      <!-- ShopList area -->
+
+      <div class="shop-list">
+        <app-quantity-form [quantity]="item.quantity" (toggle)="toggle($event)"></app-quantity-form>
+      </div>
+
 
       <!-- Edit Button -->
       <button

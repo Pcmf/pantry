@@ -3,25 +3,29 @@ import { AppStore } from '../../store/app.store';
 import { ActivatedRoute } from '@angular/router';
 import { CATEGORIES } from '../../data/categories';
 import { CommonModule } from '@angular/common';
+import { CategoryStore } from '../../components/settings-categories/store/category.store';
 
 @Component({
   selector: 'app-product-form',
   imports: [CommonModule],
   templateUrl: './product-form.component.html',
   styleUrl: './product-form.component.scss',
+  providers: [CategoryStore],
+  standalone: true,
 })
 export class ProductFormComponent implements OnInit {
   readonly store = inject(AppStore);
   readonly route = inject(ActivatedRoute);
+  readonly catStore = inject(CategoryStore)
 
   private readonly id = this.route.snapshot.params['id'];
   product =  Object.values(this.store.products()).find((p) => p.id === this.id) ||
       null;
-  public categories = CATEGORIES;
+  public categories = this.catStore.categories();
 
 
   ngOnInit() {
-    if (this.route.snapshot.params['id'] === 'new') {
+    if (!this.route.snapshot.params['id']) {
       //initialize a new product
       this.product = {
         id: crypto.randomUUID(),

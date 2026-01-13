@@ -1,9 +1,6 @@
-@let products = store.productsView();
-
-@for (item of products; track item.id) {
-  <app-product [product]="item" (edit)="onEdit($event)"></app-product>
-}
-
-<div class="add-product">
-<button (click)="addNewProduct()">Add product</button>
-</div>
+<ng-container class="container">
+  @let products = store.productsView();
+  @for (item of products; track item.id) {
+    <app-product [product]="item" (edit)="onEdit($event)"></app-product>
+  }
+</ng-container>

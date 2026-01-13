@@ -11,14 +11,14 @@ export function setSearchQuery(
 export function updateProductList(
   product: ProductViewModel
 ): PartialStateUpdater<PantrySlice> {
-  console.log('Updating product:', product);
-
+  product.lastUpdated = new Date();
   return (state) => {
       //check if product exists and if so get the index
       const productIndex = state.products.findIndex(p => p.id === product.id);
       if (productIndex !== -1) {
         //update the product
         const updatedProducts = [...state.products];
+
         updatedProducts[productIndex] = product;
 
         return {
@@ -26,7 +26,7 @@ export function updateProductList(
           productsView: updatedProducts.sort((a, b) => a.name.localeCompare(b.name))
         };
       }
-      //if product doesn't exist, add it
+    //if product doesn't exist, add it
       return {
         products: [...state.products, product].sort((a, b) => a.name.localeCompare(b.name)),
         productsView: [...state.productsView, product].sort((a, b) => a.name.localeCompare(b.name))

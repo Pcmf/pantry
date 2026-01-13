@@ -9,7 +9,7 @@
   <!-- Form -->
   <div class="form">
     <label>
-      Name - {{ product.id }}
+      Name
       <input
         type="text"
         [value]="product.name"
@@ -18,6 +18,7 @@
       />
     </label>
     <label>
+      Category
       <select
         [value]="product.categoryId"
         (change)="updateCategory($any($event.target).value)"
