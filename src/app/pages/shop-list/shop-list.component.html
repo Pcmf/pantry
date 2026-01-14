@@ -1,1 +1,20 @@
-<p>shop-list works!</p>
+<div class="container">
+  <header>
+      <h3>Shop List</h3>
+  </header>
+
+  <content>
+    @if(!shopListStore.items().length) {
+      <div class="empty">
+        No products on the shop list.
+      </div>
+    }
+    @else {
+
+      @for (item of shopListStore.items(); track item.id) {
+        <app-shop-list-item [item]="item" (checkedItem)="checkedItem($event)"></app-shop-list-item>
+      }
+    }
+  </content>
+</div>
+

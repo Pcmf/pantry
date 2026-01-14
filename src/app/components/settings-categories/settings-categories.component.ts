@@ -1,5 +1,4 @@
-import { Component, computed, inject, output } from '@angular/core';
-import { CATEGORIES } from '../../data/categories';
+import { Component, inject } from '@angular/core';
 import { Category } from '../../models/pantry.models';
 import { Dialog } from '@angular/cdk/dialog';
 import { AppCategoryFormModalComponent } from './modal/category-form-modal.component';
@@ -18,13 +17,6 @@ export class SettingsCategoriesComponent {
 
   readonly store = inject(CategoryStore);
 
-
-
-
-  constructor() {
-    console.log('Cat store', this.store.categories())
-  }
-
   addCategory() {
     console.log('Add');
     this.openDialog(null);
@@ -35,6 +27,7 @@ export class SettingsCategoriesComponent {
     this.openDialog(category);
   }
 
+  // Modal
   private openDialog(category: Category | null) {
     const ref = this.dialog.open<Category>(AppCategoryFormModalComponent, {
       data: category,

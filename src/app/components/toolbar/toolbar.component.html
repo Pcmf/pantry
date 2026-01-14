@@ -1,5 +1,5 @@
 
-<header class="toolbar">
+<div class="toolbar">
       <!-- App icon / Home -->
       <a routerLink="/" class="logo" aria-label="Home">
         🥫<strong>{{ name() }}</strong>
@@ -17,11 +17,16 @@
           ➕
         </a>
         <a
-          routerLink="/"
+          routerLink="/pantry"
           routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
         >
           🏠
+        </a>
+        <a
+          routerLink="/shop"
+          routerLinkActive="active"
+        >
+          🛒
         </a>
 
         <a
@@ -31,4 +36,4 @@
           ⚙️
         </a>
       </nav>
-    </header>
+</div>

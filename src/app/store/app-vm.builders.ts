@@ -1,6 +1,5 @@
 import { Category, Product } from "../models/pantry.models";
 import { ProductViewModel } from "../components/product/view-model/product.vm";
-import { sortRecordByProp } from "../helpers/order.helper";
 
 export function createPantryListItemViewModel(
   products: Product[],

@@ -5,30 +5,36 @@ import {
   computed,
   inject,
   input,
-  linkedSignal,
   output,
 } from '@angular/core';
 import { ProductViewModel } from './view-model/product.vm';
 import { diffInDaysFromToday } from '../../helpers/date.helper';
 import { QuantityFormComponent } from '../quantity-form/quantity-form.component';
 import { AppStore } from '../../store/app.store';
-import { AppCategoryFormModalComponent } from "../settings-categories/modal/category-form-modal.component";
+import { ShopListStore } from '../shop-list-item/store/shopListStore';
 
 @Component({
   selector: 'app-product',
-  imports: [DatePipe, CommonModule, QuantityFormComponent, AppCategoryFormModalComponent],
+  imports: [DatePipe, CommonModule, QuantityFormComponent],
   templateUrl: './product.component.html',
   styleUrl: './product.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ShopListStore],
 })
 export class ProductComponent {
   readonly product = input.required<ProductViewModel>({});
   readonly edit = output<string>();
   readonly prodStore = inject(AppStore);
+  readonly shopListStore = inject(ShopListStore);
 
-  readonly dueDays = linkedSignal(() =>
+  readonly dueDays = computed(() =>
     diffInDaysFromToday(this.product().expiryDate!)
   );
+
+  readonly cartQuantity = computed(() => this.shopListStore.items().find(item => item.id === this.product().id)?.quantity ?? 0);
+  readonly isInCart = computed(() => this.shopListStore.items().find(item => item.id === this.product().id) !== undefined);
+
+
 
   deadline = computed(() => {
     const deadlineClass = [
@@ -52,7 +58,13 @@ export class ProductComponent {
 
   toggle(quantity: number) {
     console.log(quantity);
-    this.product().quantity += quantity;
-    this.prodStore.updateProductList(this.product());
+    if(!this.isInCart()){
+      this.shopListStore.addToProductList(this.product());
+    } else {
+      this.shopListStore.changeQuantity(this.product(), quantity);
+    }
+
+
   }
+
 }
