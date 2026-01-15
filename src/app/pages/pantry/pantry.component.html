@@ -1,6 +1,6 @@
-<ng-container class="container">
+<div class="container">
   @let products = store.productsView();
   @for (item of products; track item.id) {
     <app-product [product]="item" (edit)="onEdit($event)"></app-product>
   }
-</ng-container>
+</div>

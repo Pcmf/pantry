@@ -1,13 +1,27 @@
 <div class="container">
 
   <div class="symbol">
-    <button type="button" class="edit" [disabled]="quantity() === 0"  (click)= "toggle.emit(-1)">➖</button>
+    <button
+      type="button"
+      class="edit"
+      [disabled]="quantity() === 0 || disableAll()"
+      (click)= "toggle.emit(-1)"
+    >
+      ➖
+    </button>
   </div>
   <div class="quantity-display">
     {{ quantity() }} 🛒
   </div>
 
   <div class="symbol">
-    <button type="button" class="edit" (click)= "toggle.emit(1)">➕</button>
+    <button
+      type="button"
+      class="edit"
+      [disabled]="disableAll()"
+      (click)= "toggle.emit(1)"
+    >
+      ➕
+    </button>
   </div>
 </div>

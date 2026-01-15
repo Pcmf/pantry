@@ -16,9 +16,13 @@
 
     <!-- ShopList area -->
     <div class="shop-list">
-      <app-quantity-form [quantity]="product.quantity"></app-quantity-form>
+      <app-quantity-form
+        [quantity]="product.quantity"
+        (toggle)="toggleQuantity($event)"
+        [disableAll]="disableAll">
+      </app-quantity-form>
     </div>
 
-    <input type="checkbox" (change)="checkedItem.emit(product)">
+    <input type="checkbox" (change)="checkItem(product)">
 
 </div>

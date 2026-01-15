@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, computed, inject, input, output, signal } from '@angular/core';
 import { ShopListStore } from '../store/shopListStore';
 import { CommonModule } from '@angular/common';
 import { QuantityFormComponent } from '../../quantity-form/quantity-form.component';
@@ -12,11 +12,20 @@ import { ShopListViewModel } from '../store/shop-list.vm';
   imports: [CommonModule, QuantityFormComponent]
 })
 export class ShopListItemComponent {
-  readonly item = input.required<ShopListViewModel>({});
-  readonly checkedItem = output<ShopListViewModel>();
+  readonly shopListStore = inject(ShopListStore);
+
+  readonly item = input.required<ShopListViewModel>();
 
 
+  disableAll = false;
 
+  toggleQuantity(quantity: number) {
+    this.shopListStore.changeQuantity(this.item(), quantity);
+  }
 
+  checkItem(product: ShopListViewModel) {
+    this.disableAll = !this.disableAll;
+    console.log(product);
+  }
 
 }

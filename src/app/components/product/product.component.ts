@@ -22,7 +22,7 @@ import { ShopListStore } from '../shop-list-item/store/shopListStore';
   providers: [ShopListStore],
 })
 export class ProductComponent {
-  readonly product = input.required<ProductViewModel>({});
+  readonly product = input.required<ProductViewModel>();
   readonly edit = output<string>();
   readonly prodStore = inject(AppStore);
   readonly shopListStore = inject(ShopListStore);

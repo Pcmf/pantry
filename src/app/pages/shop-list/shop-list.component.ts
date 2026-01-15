@@ -16,4 +16,8 @@ export class ShopListComponent {
   checkedItem(product: ShopListViewModel) {
     console.log(product);
   }
+
+  done() {
+    console.log('done');
+  }
 }
