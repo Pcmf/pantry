@@ -14,6 +14,7 @@ describe('QuantityFormComponent', () => {
 
     fixture = TestBed.createComponent(QuantityFormComponent);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('quantity', 5);
     fixture.detectChanges();
   });
 

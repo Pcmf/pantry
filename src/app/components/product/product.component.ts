@@ -18,7 +18,7 @@ import { ShopListStore } from '../shop-list-item/store/shopListStore';
   imports: [DatePipe, CommonModule, QuantityFormComponent],
   templateUrl: './product.component.html',
   styleUrl: './product.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ShopListStore],
 })
 export class ProductComponent {

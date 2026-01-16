@@ -10,11 +10,9 @@ import { AppStore } from './store/app.store';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'Pantry';
 
   readonly store = inject(AppStore);
   onSearch(query: string) {
-    console.log('AppComponent received search query:', query);
     this.store.setSearchQuery(query);
   }
 }

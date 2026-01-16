@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ProductFormComponent } from './product-form.component';
+import { ActivatedRoute } from '@angular/router';
 
 describe('ProductFormComponent', () => {
   let component: ProductFormComponent;
@@ -8,7 +8,17 @@ describe('ProductFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProductFormComponent]
+      imports: [ProductFormComponent],
+      providers: [
+        {
+        provide: ActivatedRoute,
+        useValue: {
+          snapshot: {
+            params: { id: '123' },
+          }
+        }
+      }
+      ],
     })
     .compileComponents();
 

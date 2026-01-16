@@ -14,6 +14,7 @@ describe('ShopListItemComponent', () => {
 
     fixture = TestBed.createComponent(ShopListItemComponent);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('item', {})
     fixture.detectChanges();
   });
 

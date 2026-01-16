@@ -62,7 +62,7 @@ export const ShopListStore = signalStore(
       }
 
       effect(() => {
-        console.log('effect', persistedShopList());
+        console.log('effect - shopListStore save to local store', persistedShopList());
         localStorage.setItem('pantry_shop_list', JSON.stringify(persistedShopList()));
       });
 
