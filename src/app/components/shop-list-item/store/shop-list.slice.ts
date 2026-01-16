@@ -11,9 +11,7 @@ export interface ShopListSlice {
 }
 
 export const initialShopListSlice: ShopListSlice = {
-  items: [
-    
-  ],
+  items: [],
 };
 
 

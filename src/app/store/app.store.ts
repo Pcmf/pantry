@@ -19,6 +19,12 @@ export const AppStore = signalStore(
       }));
      },
     updateProductList: (product: ProductViewModel) => patchState(store, updaters.updateProductList(product)),
+    updateProductQuantity: (product: ProductViewModel, quantity: number) => (
+      patchState(store, (state) => ({
+        products: state.products
+          .map(p => p.id === product.id ? { ...p, quantity: p.quantity + quantity } : p)
+      }))
+    )
   })),
     withHooks(store => ({
       onInit() {
@@ -42,6 +48,7 @@ export const AppStore = signalStore(
 
         //when products change, persist to local storage
         effect(() => {
+          console.log('AppStore ffect', persistedProducts());
           localStorage.setItem('pantry_products', JSON.stringify(persistedProducts()));
         });
       }

@@ -5,4 +5,5 @@ export interface ShopListViewModel {
   icon: string;
   quantity: number;
   pantryQuantity?: number;
+  checked?: boolean;
 }

@@ -27,7 +27,7 @@
       <!-- ShopList area -->
 
       <div class="shop-list">
-        <app-quantity-form [quantity]="cartQuantity()" (toggle)="toggle($event)"></app-quantity-form>
+        <app-quantity-form [quantity]="cartQuantity()" (changeQuantity)="toggle($event)"></app-quantity-form>
       </div>
 
 

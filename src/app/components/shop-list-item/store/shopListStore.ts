@@ -10,7 +10,14 @@ export const ShopListStore = signalStore(
     addToProductList(product: ProductViewModel) {
       console.log('add');
       patchState(store, (state) => ({
-        items: [...state.items, { name: product.name, id: product.id, icon: product.categoryIcon, quantity: 1, pantryQuantity: product.quantity}]
+        items: [...state.items, {
+          name: product.name,
+          id: product.id,
+          icon: product.categoryIcon,
+          quantity: 1,
+          pantryQuantity: product.quantity,
+          checked: false
+        }]
       }))
      },
     changeQuantity(product: ProductViewModel | ShopListViewModel, quantity: number) {
@@ -19,6 +26,18 @@ export const ShopListStore = signalStore(
         items: state.items.map(item =>
           item.id === product.id ? { ...item, quantity: item.quantity + quantity } : item
         )
+      }))
+    },
+    toggleChecked(id: string) {
+      patchState(store, (state) => ({
+        items: state.items.map(item =>
+          item.id === id ? { ...item, checked: !item.checked } : item
+        )
+      }))
+    },
+    toggleAllChecked(value: boolean) {
+      patchState(store, (state) => ({
+        items: state.items.map(item => ({ ...item, checked: value }))
       }))
      },
     removeFromList(productId: string) {
@@ -43,6 +62,7 @@ export const ShopListStore = signalStore(
       }
 
       effect(() => {
+        console.log('effect', persistedShopList());
         localStorage.setItem('pantry_shop_list', JSON.stringify(persistedShopList()));
       });
 

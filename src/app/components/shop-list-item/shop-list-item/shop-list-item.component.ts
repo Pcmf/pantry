@@ -4,6 +4,12 @@ import { CommonModule } from '@angular/common';
 import { QuantityFormComponent } from '../../quantity-form/quantity-form.component';
 import { ShopListViewModel } from '../store/shop-list.vm';
 
+type ToggleQuantity = {
+  product: ShopListViewModel;
+  quantity: number;
+}
+
+
 @Component({
   selector: 'app-shop-list-item',
   templateUrl: './shop-list-item.component.html',
@@ -15,17 +21,12 @@ export class ShopListItemComponent {
   readonly shopListStore = inject(ShopListStore);
 
   readonly item = input.required<ShopListViewModel>();
+  readonly toggle = output<ToggleQuantity>();
+  readonly toggleChecks = output<string>();
 
-
-  disableAll = false;
 
   toggleQuantity(quantity: number) {
-    this.shopListStore.changeQuantity(this.item(), quantity);
-  }
-
-  checkItem(product: ShopListViewModel) {
-    this.disableAll = !this.disableAll;
-    console.log(product);
+    this.toggle.emit({product: this.item(), quantity});
   }
 
 }

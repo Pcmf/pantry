@@ -12,11 +12,16 @@
     @else {
 
       @for (item of shopListStore.items(); track item.id) {
-        <app-shop-list-item [item]="item"></app-shop-list-item>
+        <app-shop-list-item [item]="item" (toggle)="toggleQuantity($event)" (toggleChecks)="toggleChecks($event)"></app-shop-list-item>
       }
     }
   </content>
   <footer>
+    <div class="right">
+      <label>Check / uncheck all </label>
+      <input type="checkbox" #checkAll (change)="toggleAllChecks($event.target.checked)"/>
+    </div>
+
     <button type="button" (click)="done()">Done</button>
   </footer>
 </div>

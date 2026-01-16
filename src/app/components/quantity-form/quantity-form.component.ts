@@ -10,5 +10,5 @@ import { ProductViewModel } from '../product/view-model/product.vm';
 export class QuantityFormComponent {
   readonly quantity = input.required<number>();
   readonly disableAll = input<boolean>(false);
-  readonly toggle = output<number>();
+  readonly changeQuantity = output<number>();
 }

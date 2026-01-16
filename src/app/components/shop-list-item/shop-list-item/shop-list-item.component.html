@@ -18,11 +18,11 @@
     <div class="shop-list">
       <app-quantity-form
         [quantity]="product.quantity"
-        (toggle)="toggleQuantity($event)"
-        [disableAll]="disableAll">
+        (changeQuantity)="toggleQuantity($event)"
+        [disableAll]="!!product.checked">
       </app-quantity-form>
     </div>
 
-    <input type="checkbox" (change)="checkItem(product)">
+    <input type="checkbox" [checked]="!!product.checked ? 'checked' : ''" (change)="toggleChecks.emit(product.id)">
 
 </div>

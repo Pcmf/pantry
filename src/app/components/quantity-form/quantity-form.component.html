@@ -5,7 +5,7 @@
       type="button"
       class="edit"
       [disabled]="quantity() === 0 || disableAll()"
-      (click)= "toggle.emit(-1)"
+      (click)= "changeQuantity.emit(-1)"
     >
       ➖
     </button>
@@ -19,7 +19,7 @@
       type="button"
       class="edit"
       [disabled]="disableAll()"
-      (click)= "toggle.emit(1)"
+      (click)= "changeQuantity.emit(1)"
     >
       ➕
     </button>
