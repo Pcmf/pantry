@@ -1,7 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { AppStore } from '../../store/app.store';
 import { ActivatedRoute } from '@angular/router';
-import { CATEGORIES } from '../../data/categories';
 import { CommonModule } from '@angular/common';
 import { CategoryStore } from '../../components/settings-categories/store/category.store';
 
@@ -33,7 +32,7 @@ export class ProductFormComponent implements OnInit {
         quantity: 0,
         categoryId: this.categories[0].id,
         categoryIcon: this.categories[0].icon,
-        expiryDate: new Date(),
+        expiryDate: undefined,
         lastUpdated: new Date(),
       };
     }

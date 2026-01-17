@@ -17,11 +17,7 @@ export class PantryComponent {
 
 
   onEdit(productId: string) {
-    console.log('Editing product with ID:', productId);
     this.router.navigate(['/edit', productId]);
   }
 
-  addNewProduct() {
-    this.router.navigate(['/edit', 'new']);
-  }
 }

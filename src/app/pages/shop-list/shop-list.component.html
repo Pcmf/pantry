@@ -2,27 +2,24 @@
   <header>
       <h3>Shop List</h3>
   </header>
-
-  <article>
     @if(!shopListStore.items().length) {
       <div class="empty">
         No products on the shop list.
       </div>
     }
     @else {
-
       @for (item of shopListStore.items(); track item.id) {
+      <article>
         <app-shop-list-item [item]="item" (toggle)="toggleQuantity($event)" (toggleChecks)="toggleChecks($event)"></app-shop-list-item>
+      </article>
       }
+      <footer>
+        <div class="right">
+          <label>Check / uncheck all </label>
+          <input type="checkbox" #checkAll (change)="toggleAllChecks($event.target.checked)"/>
+        </div>
+        <button type="button" (click)="done()">Done</button>
+      </footer>
     }
-  </article>
-  <footer>
-    <div class="right">
-      <label>Check / uncheck all </label>
-      <input type="checkbox" #checkAll (change)="toggleAllChecks($event.target.checked)"/>
-    </div>
-
-    <button type="button" (click)="done()">Done</button>
-  </footer>
 </div>
 

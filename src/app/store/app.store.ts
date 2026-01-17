@@ -48,7 +48,7 @@ export const AppStore = signalStore(
 
         //when products change, persist to local storage
         effect(() => {
-          console.log('AppStore ffect', persistedProducts());
+          console.log('AppStore effect', persistedProducts());
           localStorage.setItem('pantry_products', JSON.stringify(persistedProducts()));
         });
       }
