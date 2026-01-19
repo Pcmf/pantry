@@ -5,8 +5,6 @@ export function sortRecordByProp<T>(
 ): Record<string, T> {
   const factor = direction === 'asc' ? 1 : -1;
 
-  console.log('sorting record', selector)
-
   return Object.fromEntries(
     Object.entries(record).sort(
       ([, a], [, b]) => factor * (

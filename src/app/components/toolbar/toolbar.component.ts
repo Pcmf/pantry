@@ -13,8 +13,6 @@ export class ToolbarComponent {
   readonly searchQuery = output<string>();
 
   onSearch(query: string) {
-    console.log('Searching for:', query);
-    // Implement search functionality here
     this.searchQuery.emit(query);
 
   }

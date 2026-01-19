@@ -19,10 +19,10 @@ export const AppStore = signalStore(
       }));
      },
     updateProductList: (product: ProductViewModel) => patchState(store, updaters.updateProductList(product)),
-    updateProductQuantity: (product: ProductViewModel, quantity: number) => (
+    updateProductQuantity: (productId: string, quantity: number) => (
       patchState(store, (state) => ({
         products: state.products
-          .map(p => p.id === product.id ? { ...p, quantity: p.quantity + quantity } : p)
+          .map(p => p.id === productId ? { ...p, quantity: p.quantity + quantity } : p)
       }))
     )
   })),
@@ -48,7 +48,6 @@ export const AppStore = signalStore(
 
         //when products change, persist to local storage
         effect(() => {
-          console.log('AppStore effect', persistedProducts());
           localStorage.setItem('pantry_products', JSON.stringify(persistedProducts()));
         });
       }

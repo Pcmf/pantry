@@ -11,6 +11,7 @@ import { ProductViewModel } from './view-model/product.vm';
 import { diffInDaysFromToday } from '../../helpers/date.helper';
 import { QuantityFormComponent } from '../quantity-form/quantity-form.component';
 import { ShopListStore } from '../../pages/shop-list/store/shopListStore';
+import { ShopListViewModel } from '../../pages/shop-list/store/shop-list.vm';
 
 @Component({
   selector: 'app-product',
@@ -22,8 +23,10 @@ import { ShopListStore } from '../../pages/shop-list/store/shopListStore';
 })
 export class ProductComponent {
   readonly product = input.required<ProductViewModel>();
+  readonly shopList = input.required<ShopListViewModel[]>();
+  readonly changeShopListQuantity = output<number>();
   readonly edit = output<string>();
-  readonly shopListStore = inject(ShopListStore);
+  readonly takeOutProduct = output<string>();
 
   readonly dueDays = computed(() =>
     diffInDaysFromToday(this.product().expiryDate!)
@@ -31,13 +34,12 @@ export class ProductComponent {
 
   readonly cartQuantity = computed(
     () =>
-      this.shopListStore.items().find((item) => item.id === this.product().id)
+      this.shopList().find((item) => item.id === this.product().id)
         ?.quantity ?? 0
   );
   readonly isInCart = computed(
     () =>
-      this.shopListStore
-        .items()
+      this.shopList()
         .find((item) => item.id === this.product().id) !== undefined
   );
 
@@ -62,11 +64,7 @@ export class ProductComponent {
   });
 
   toggle(quantity: number) {
-    console.log(quantity);
-    if (!this.isInCart()) {
-      this.shopListStore.addToProductList(this.product());
-    } else {
-      this.shopListStore.changeQuantity(this.product(), quantity);
-    }
+    this.changeShopListQuantity.emit(quantity)
   }
+
 }

@@ -14,7 +14,6 @@ export const CategoryStore = signalStore(
       patchState(store, (state) => ({
         categories: [...state.categories, category],
       }));
-      console.log('Store', store.categories());
     },
 
     updateCategory(category: Category) {

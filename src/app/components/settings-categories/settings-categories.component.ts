@@ -18,12 +18,10 @@ export class SettingsCategoriesComponent {
   readonly store = inject(CategoryStore);
 
   addCategory() {
-    console.log('Add');
     this.openDialog(null);
   }
 
   editCategory(category: Category) {
-    console.log('Edit ', category);
     this.openDialog(category);
   }
 
@@ -35,8 +33,6 @@ export class SettingsCategoriesComponent {
 
     ref.closed.subscribe((result) => {
       if (!result) return;
-      console.log('Result ', result);
-      // this.categories = [...this.categories, result];
       this.store.addCategory(result);
     });
   }

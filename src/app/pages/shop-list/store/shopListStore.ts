@@ -13,8 +13,8 @@ import { ShopListViewModel } from './shop-list.vm';
 export const ShopListStore = signalStore(
   withState(initialShopListSlice),
   withMethods((store) => ({
+
     addToProductList(product: ProductViewModel) {
-      console.log('add', store.items());
       patchState(store, (state) => ({
         items: [
           ...state.items,
@@ -33,7 +33,13 @@ export const ShopListStore = signalStore(
       product: ProductViewModel | ShopListViewModel,
       quantity: number
     ) {
-      console.log('change ', product, quantity);
+      const alreadyInList = store.items().find(
+        (item) => item.id === product.id
+      );
+      if (!alreadyInList) {
+        this.addToProductList(product as ProductViewModel);
+      }
+      else {
       patchState(store, (state) => ({
         items: state.items.map((item) =>
           item.id === product.id
@@ -41,6 +47,7 @@ export const ShopListStore = signalStore(
             : item
         ),
       }));
+    }
     },
     toggleChecked(id: string) {
       patchState(store, (state) => ({
@@ -67,7 +74,6 @@ export const ShopListStore = signalStore(
   })),
   withHooks((store) => ({
     onInit() {
-      console.log('ShopListStore onInit', store.items());
       const persistedShopList = computed(() => store.items());
       const shopListLocalStore = localStorage.getItem('pantry_shop_list');
       if (shopListLocalStore) {
@@ -76,10 +82,6 @@ export const ShopListStore = signalStore(
       }
 
       effect(() => {
-        console.log(
-          'effect - shopListStore save to local store',
-          persistedShopList()
-        );
         localStorage.setItem(
           'pantry_shop_list',
           JSON.stringify(persistedShopList())

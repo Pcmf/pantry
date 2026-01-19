@@ -1,8 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { AppStore } from '../../store/app.store';
+import { AppStore } from '../../../store/app.store';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { CategoryStore } from '../../components/settings-categories/store/category.store';
+import { CategoryStore } from '../../../components/settings-categories/store/category.store';
 
 @Component({
   selector: 'app-product-form',
@@ -15,13 +15,12 @@ import { CategoryStore } from '../../components/settings-categories/store/catego
 export class ProductFormComponent implements OnInit {
   readonly store = inject(AppStore);
   readonly route = inject(ActivatedRoute);
-  readonly catStore = inject(CategoryStore)
+  readonly catStore = inject(CategoryStore);
 
   private readonly id = this.route.snapshot.params['id'];
-  product =  Object.values(this.store.products()).find((p) => p.id === this.id) ||
-      null;
+  product =
+    Object.values(this.store.products()).find((p) => p.id === this.id) || null;
   public categories = this.catStore.categories();
-
 
   ngOnInit() {
     if (!this.route.snapshot.params['id']) {

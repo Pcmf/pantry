@@ -1,43 +1,57 @@
 
 <div class="product">
   @let item = product();
-      <!-- Category Icon -->
-      <div class="icon">
-        {{ item.categoryIcon }}
-      </div>
+  <div class="product-item">
+    <!-- Category Icon -->
+    <div class="icon">
+      {{ item.categoryIcon }}
+    </div>
 
-      <!-- Product Info -->
-      <div class="info">
-        <div class="name">{{ item.name }}</div>
-        <div class="quantity">
-          Qty: <strong>{{ item.quantity }}</strong>
-        </div>
-        @if(item.quantity && item.expiryDate) {
-        <div class="expiry" [ngClass]="deadline()">
-          Expires:
-          @if(dueDays() >= 7) {
-           <strong>{{ item?.expiryDate | date: 'mediumDate' }}</strong>
-          }
-          @else {
-            <strong> in {{ dueDays() }} day(s)</strong>
-          }
-        </div>
+    <!-- Product Info -->
+    <div class="info">
+      <div class="name">{{ item.name }}</div>
+      <div class="quantity">
+        Qty: <strong>{{ item.quantity }}</strong>
+      </div>
+      @if(item.quantity && item.expiryDate) {
+      <div class="expiry" [ngClass]="deadline()">
+        Expires:
+        @if(dueDays() >= 7) {
+        <strong>{{ item?.expiryDate | date: 'mediumDate' }}</strong>
+        }
+        @else {
+          <strong> in {{ dueDays() }} day(s)</strong>
         }
       </div>
-      <!-- ShopList area -->
+      }
+    </div>
 
-      <div class="shop-list">
-        <app-quantity-form [quantity]="cartQuantity()" (changeQuantity)="toggle($event)"></app-quantity-form>
-      </div>
-
-
-      <!-- Edit Button -->
-      <button
+    <!-- Quantity Form -->
+        <button
         type="button"
         class="edit"
-        aria-label="Edit product"
-        (click)="edit.emit(item.id)"
+        aria-label="Take out product"
+        title="take out from pantry"
+        [disabled]="item.quantity === 0"
+        (click)="takeOutProduct.emit(item.id)"
       >
-        ✏️
+        📤
       </button>
+  </div>
+
+  <!-- ShopList area -->
+  <div class="shop-list">
+    <app-quantity-form [quantity]="cartQuantity()" (changeQuantity)="toggle($event)"></app-quantity-form>
+  </div>
+
+
+  <!-- Edit Button -->
+  <button
+    type="button"
+    class="edit"
+    aria-label="Edit product"
+    (click)="edit.emit(item.id)"
+  >
+    ✏️
+  </button>
 </div>
