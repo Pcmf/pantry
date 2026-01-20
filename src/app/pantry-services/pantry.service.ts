@@ -1,6 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable, Type } from "@angular/core";
 import { ProductViewModel } from "../components/product/view-model/product.vm";
+import { Category, Product } from "../models/pantry.models";
+import { Observable } from "rxjs";
 
 export type EnvironmentType = {
   url: string;
@@ -16,12 +18,12 @@ export class PantryService {
 
   readonly environment: EnvironmentType = { url: 'http://localhost:3000' };
 
-  getProducts() {
-    return this.http.get(`${this.environment.url}/products`);
+  getProducts(): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.environment.url}/products`)!;
   }
 
-  getCategories() {
-    return this.http.get(`${this.environment.url}/categories`);
+  getCategories(): Observable<Category[]> {
+    return this.http.get<Category[]>(`${this.environment.url}/categories`)!;
   }
 
   getPantryProductsList() {

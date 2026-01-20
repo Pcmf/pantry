@@ -1,12 +1,16 @@
-import { patchState, signalStore, withHooks, withMethods, withState } from "@ngrx/signals"
+import { patchState, signalStore, withHooks, withMethods, withProps, withState } from "@ngrx/signals"
 import { Category, initialCategorySlice } from "./category.slice"
-import { CATEGORIES } from "../../../data/categories"
-import { computed, effect } from "@angular/core"
+// import { CATEGORIES } from "../../../data/categories"
+import { computed, effect, inject } from "@angular/core"
+import { PantryService } from "../../../pantry-services/pantry.service";
+import { rxMethod } from "@ngrx/signals/rxjs-interop";
+import { map, switchAll, tap } from "rxjs";
 
 
 export const CategoryStore = signalStore(
 
   withState(initialCategorySlice),
+  withProps(_ => { const _categoryService = inject(PantryService); return { categoryService: _categoryService }),
 
   withMethods((store) => ({
 
@@ -26,7 +30,17 @@ export const CategoryStore = signalStore(
   })),
   withHooks(store => ({
     onInit() {
-      patchState(store, { categories: CATEGORIES });
+      const categories = rxMethod<void>(input$ => {
+        return input$.pipe(
+          map(() => store.categoryService.getCategories()),
+          switchAll(),
+          tap((categories: Category[]) => {
+            patchState(store, { categories });
+          }
+        ))
+      })
+
+      categories();
 
       const persistedCategories = computed(() => store.categories());
       const categoriesLocalStore = localStorage.getItem('pantry_categories');
