@@ -22,13 +22,6 @@ export class PantryComponent {
   readonly router = inject(Router);
   readonly pantryService = inject(PantryService);
 
-  constructor() {
-    this.pantryService.getProducts().subscribe((res:any) => console.log(res))
-
-
-  }
-
-
   onEdit(productId: string) {
     this.router.navigate(['/edit', productId]);
   }

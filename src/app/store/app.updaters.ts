@@ -39,7 +39,6 @@ export function updatePantryListItemViewModel(
   products: ProductViewModel[],
   searchQuery: string
 ): ProductViewModel[] {
-
   const lowerCaseQuery = searchQuery.toLowerCase();
   const filteredProducts = products.filter(product => product.name.toLowerCase().includes(lowerCaseQuery));
 

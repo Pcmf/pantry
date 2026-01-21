@@ -1,4 +1,4 @@
-import { Component, inject, input, output, signal } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject, input, output, signal } from "@angular/core";
 import { Category } from "../../../models/pantry.models";
 import { Dialog, DIALOG_DATA, DialogRef } from "@angular/cdk/dialog";
 import { CommonModule } from "@angular/common";
@@ -7,6 +7,7 @@ import { CommonModule } from "@angular/common";
   selector: 'app-category-form-modal',
   templateUrl: './category-form-modal.component.html',
   styleUrl: './category-form-modal.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule]
 })
 export class AppCategoryFormModalComponent {

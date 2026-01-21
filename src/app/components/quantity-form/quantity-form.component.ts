@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { ProductViewModel } from '../product/view-model/product.vm';
 
 @Component({
@@ -6,6 +6,7 @@ import { ProductViewModel } from '../product/view-model/product.vm';
   imports: [],
   templateUrl: './quantity-form.component.html',
   styleUrl: './quantity-form.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QuantityFormComponent {
   readonly quantity = input.required<number>();

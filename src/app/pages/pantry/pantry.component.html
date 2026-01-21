@@ -1,5 +1,5 @@
 <div class="container">
-  @let products = store.products();
+  @let products = store.productsView();
   @for (item of products; track item.id) {
     <article>
       <app-product

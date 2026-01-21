@@ -1,5 +1,6 @@
 export interface CategorySlice {
   categories: Category[];
+  loading: boolean
 }
 
 export interface Category {
@@ -10,5 +11,6 @@ export interface Category {
 
 export const initialCategorySlice: CategorySlice = {
   categories: [],
+  loading: false
 }
 

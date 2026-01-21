@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { AppStore } from '../../../store/app.store';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -11,6 +11,7 @@ import { CategoryStore } from '../../../components/settings-categories/store/cat
   styleUrl: './product-form.component.scss',
   providers: [CategoryStore],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductFormComponent implements OnInit {
   readonly store = inject(AppStore);
@@ -18,11 +19,11 @@ export class ProductFormComponent implements OnInit {
   readonly catStore = inject(CategoryStore);
 
   private readonly id = this.route.snapshot.params['id'];
-  product =
-    Object.values(this.store.products()).find((p) => p.id === this.id) || null;
+  product = this.store.productsView().find((p) => p.id === this.id) || null;
   public categories = this.catStore.categories();
 
   ngOnInit() {
+    console.log('onInit',this.categories);
     if (!this.route.snapshot.params['id']) {
       //initialize a new product
       this.product = {

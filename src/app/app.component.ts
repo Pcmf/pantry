@@ -10,9 +10,9 @@ import { AppStore } from './store/app.store';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
+  readonly appStore = inject(AppStore);
 
-  readonly store = inject(AppStore);
   onSearch(query: string) {
-    this.store.setSearchQuery(query);
+    this.appStore.setSearchQuery(query);
   }
 }

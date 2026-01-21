@@ -6,6 +6,7 @@ export interface PantrySlice{
   searchQuery: string;
   products: ProductViewModel[];
   productsView: ProductViewModel[];
+  loading: boolean;
 }
 
 export const initialPantrySlice: PantrySlice = {
@@ -14,4 +15,5 @@ export const initialPantrySlice: PantrySlice = {
   searchQuery: '',
   products: [],
   productsView: [],
+  loading: false,
 };

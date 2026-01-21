@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Category } from '../../models/pantry.models';
 import { Dialog } from '@angular/cdk/dialog';
 import { AppCategoryFormModalComponent } from './modal/category-form-modal.component';
@@ -9,7 +9,7 @@ import { CategoryStore } from './store/category.store';
   templateUrl: './settings-categories.component.html',
   styleUrl: './settings-categories.component.scss',
   standalone: true,
-  imports: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [CategoryStore]
 })
 export class SettingsCategoriesComponent {

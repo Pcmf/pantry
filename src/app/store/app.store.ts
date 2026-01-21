@@ -6,17 +6,56 @@ import * as updaters from "./app.updaters";
 import { ProductViewModel } from "../components/product/view-model/product.vm";
 import { updatePantryListItemViewModel } from "./app.updaters";
 import { rxMethod } from "@ngrx/signals/rxjs-interop";
-import { forkJoin, map, mergeAll, tap } from "rxjs";
+import { forkJoin, pipe, switchMap, tap } from "rxjs";
 import { PantryService } from "../pantry-services/pantry.service";
+import { Category } from "../models/pantry.models";
+import { tapResponse } from "@ngrx/operators";
+
 
 export const AppStore = signalStore(
   { providedIn: 'root' },
   withState(initialPantrySlice),
-  withProps(_ => { const _pantryService = inject(PantryService); return { pantryService: _pantryService }}),
-  withMethods((store) => ({
-    //search
+  withMethods((store, _api = inject(PantryService)) => ({
+
+    _loadProducts: rxMethod<void>(pipe(
+      tap(() => patchState(store, { loading: true })),
+      switchMap(() =>
+      forkJoin({
+        products: _api.getProducts(),
+        categories: _api.getCategories()
+      }).pipe(
+        tapResponse({
+          next: ({ products, categories }) => {
+            patchState(store, {
+              loading: false,
+              products: createPantryListItemViewModel(products, categories, '').sort((a, b) => a.name.localeCompare(b.name)),
+              productsView: createPantryListItemViewModel(products, categories, '').sort((a, b) => a.name.localeCompare(b.name))
+            });
+            // const result = _api.addProductsViewModel(store.productsView()).subscribe();
+            // console.log(result);
+          },
+          error: (error) => {
+            console.log(error);
+            patchState(store, { loading: false })
+          }
+        })
+      ))
+    )),
+    // _save: rxMethod<ProductViewModel>(pipe(
+    //   tap(() => patchState(store, { loading: true })),
+    //   switchMap((product) => _api.addProductViewModel(product)),
+    //   tapResponse({
+    //     next: () => {
+    //       patchState(store, { loading: false })
+    //     },
+    //     error: (error) => {
+    //       console.log(error);
+    //       patchState(store, { loading: false })
+    //     }
+    //   })
+    // )),
+   //search
     setSearchQuery(searchQuery: string) {
-      console.log(searchQuery, store.products());
       patchState(store, (state) => ({
         productsView: updatePantryListItemViewModel(state.products, searchQuery),
         searchQuery,
@@ -32,44 +71,13 @@ export const AppStore = signalStore(
       }))
     )
   })),
-    withHooks(store => ({
-      onInit() {
-        //initialize products
-        const getProductsApi = rxMethod<void>(input$ => {
-          return input$.pipe(
-            tap(d => console.log('start', d)),
-            map(() => forkJoin({pro: store.pantryService.getProducts(), cat: store.pantryService.getCategories()})),
-            mergeAll(),
-            tap(({  pro, cat}) => {
-              patchState(store,
-                {
-                  products: createPantryListItemViewModel(pro, cat, '').sort((a, b) => a.name.localeCompare(b.name)),
-                  productsView: createPantryListItemViewModel(pro, cat, '').sort((a, b) => a.name.localeCompare(b.name))
-                }
-              );
-            }),
-            tap(d => console.log('end', d))
-          );
-
-          }
-        )
-        getProductsApi();
-
-
-        //create a signal with products to persist to local storage on changes()
-        const persistedProducts = computed(() => store.products());
-
-        const productsLocalStore = localStorage.getItem('pantry_products');
-        //if exists on localStorage load the appStore with them
-        if (productsLocalStore) {
-          const products = JSON.parse(productsLocalStore);
-          patchState(store, { products, productsView: products});
-        }
-
-        //when products change, persist to local storage
-        effect(() => {
-          localStorage.setItem('pantry_products', JSON.stringify(persistedProducts()));
-        });
+  withHooks(store => ({
+    onInit() {
+      if (store.products().length === 0) {
+        console.log('onInit',store.products())
+        store._loadProducts();
       }
-  }))
-);
+    }
+  })
+  )
+)

@@ -40,8 +40,10 @@ export class ShopListComponent {
         const product = this.appStore
           .products()
           .find((product) => product.id === item.id);
-        this.appStore.updateProductQuantity(product!.id, item.quantity);
-        this.shopListStore.removeFromList(item.id);
+        if (product) {
+          this.appStore.updateProductQuantity(product.id, item.quantity);
+          this.shopListStore.removeFromList(item.id);
+        }
       }
     });
   }
