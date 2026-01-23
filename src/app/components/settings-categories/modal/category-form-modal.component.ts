@@ -1,6 +1,6 @@
-import { Component, inject, input, output, signal } from "@angular/core";
+import { Component, inject, signal } from "@angular/core";
 import { Category } from "../../../models/pantry.models";
-import { Dialog, DIALOG_DATA, DialogRef } from "@angular/cdk/dialog";
+import { DIALOG_DATA, DialogRef } from "@angular/cdk/dialog";
 import { CommonModule } from "@angular/common";
 
 @Component({
@@ -11,18 +11,18 @@ import { CommonModule } from "@angular/common";
 })
 export class AppCategoryFormModalComponent {
   private dialogRef = inject(DialogRef<Category>)
-  readonly data = inject<any | null>(DIALOG_DATA);
-
+  readonly data = inject<Category | null>(DIALOG_DATA);
   name = signal(this.data?.name ?? '');
   icon = signal(this.data?.icon ?? '');
 
   saveCat() {
     this.dialogRef.close({
-      id: this.data?.id?? crypto.randomUUID(),
+      id: this.data?.id ?? '',
       name: this.name(),
       icon: this.icon(),
     });
   }
+
   cancel() {
     this.dialogRef.close();
   }

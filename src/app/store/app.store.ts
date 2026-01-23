@@ -1,6 +1,6 @@
 import { patchState, signalStore, withHooks, withMethods, withProps, withState } from "@ngrx/signals";
 import { initialPantrySlice } from "./app.slice";
-import { computed, effect, inject } from "@angular/core";
+import { inject } from "@angular/core";
 import { createPantryListItemViewModel } from "./app-vm.builders";
 import * as updaters from "./app.updaters";
 import { ProductViewModel } from "../components/product/view-model/product.vm";
@@ -12,64 +12,87 @@ import { PantryService } from "../pantry-services/pantry.service";
 export const AppStore = signalStore(
   { providedIn: 'root' },
   withState(initialPantrySlice),
-  withProps(_ => { const _pantryService = inject(PantryService); return { pantryService: _pantryService }}),
+  withProps(() => { const _pantryService = inject(PantryService); return { pantryService: _pantryService }}),
   withMethods((store) => ({
     //search
     setSearchQuery(searchQuery: string) {
-      console.log(searchQuery, store.products());
+      console.log(searchQuery, store.productsView());
       patchState(store, (state) => ({
-        productsView: updatePantryListItemViewModel(state.products, searchQuery),
+        productsView: updatePantryListItemViewModel(state.productsView, searchQuery),
         searchQuery,
       }));
     },
     //Product list updates
-    updateProductList: (product: ProductViewModel) => patchState(store, updaters.updateProductList(product)),
+    addToProductList: (product: ProductViewModel) => {
+      const _product = {
+        id: product.id,
+        name: product.name,
+        categoryId: product.categoryId,
+      };
+      if (store.productsView().find(p => p.id === product.id)) {
+        store.pantryService.updateProduct(_product, product.quantity).subscribe();
+      } else {
+        store.pantryService.addProduct(product, product.quantity).subscribe();
+      }
+
+      return patchState(store, updaters.updateProductList(product));
+    },
     //Quantities update
-    updateProductQuantity: (productId: string, quantity: number) => (
-      patchState(store, (state) => ({
-        products: state.products
-          .map(p => p.id === productId ? { ...p, quantity: p.quantity + quantity } : p)
-      }))
-    )
-  })),
-    withHooks(store => ({
+    updateProductQuantity: (product: ProductViewModel, quantity: number) => {
+      const _product = {
+        id: product.id,
+        name: product.name,
+        categoryId: product.categoryId,
+      };
+      store.pantryService.updateProduct(_product, product.quantity + quantity).subscribe();
+
+      return patchState(store, (state) => ({
+        productsView: state.productsView
+          .map(p => p.id === product.id ? { ...p, quantity: p.quantity + quantity } : p)
+      }
+    ));
+    },
+  })
+  ),
+  withHooks(store => ({
       onInit() {
-        //initialize products
+        //initialize products)
         const getProductsApi = rxMethod<void>(input$ => {
           return input$.pipe(
-            tap(d => console.log('start', d)),
-            map(() => forkJoin({pro: store.pantryService.getProducts(), cat: store.pantryService.getCategories()})),
+            map(() => forkJoin({pro: store.pantryService.getProducts(), cat: store.pantryService.getCategories(), inventory: store.pantryService.getInventory()})),
             mergeAll(),
-            tap(({  pro, cat}) => {
+            tap(({ pro, cat, inventory }) => {
+
               patchState(store,
                 {
-                  products: createPantryListItemViewModel(pro, cat, '').sort((a, b) => a.name.localeCompare(b.name)),
-                  productsView: createPantryListItemViewModel(pro, cat, '').sort((a, b) => a.name.localeCompare(b.name))
+                  products: pro,
+                  productsView: createPantryListItemViewModel(pro, cat, inventory, '').sort((a, b) => a.name.localeCompare(b.name))
                 }
               );
             }),
-            tap(d => console.log('end', d))
           );
 
           }
         )
         getProductsApi();
 
-
+        /**
+         * Persistency on localStorage
+         */
         //create a signal with products to persist to local storage on changes()
-        const persistedProducts = computed(() => store.products());
+        // const persistedProducts = computed(() => store.products());
 
-        const productsLocalStore = localStorage.getItem('pantry_products');
-        //if exists on localStorage load the appStore with them
-        if (productsLocalStore) {
-          const products = JSON.parse(productsLocalStore);
-          patchState(store, { products, productsView: products});
-        }
+        // const productsLocalStore = localStorage.getItem('pantry_products');
+        // //if exists on localStorage load the appStore with them
+        // if (productsLocalStore) {
+        //   const products = JSON.parse(productsLocalStore);
+        //   patchState(store, { products, productsView: products});
+        // }
 
-        //when products change, persist to local storage
-        effect(() => {
-          localStorage.setItem('pantry_products', JSON.stringify(persistedProducts()));
-        });
+        // //when products change, persist to local storage
+        // effect(() => {
+        //   localStorage.setItem('pantry_products', JSON.stringify(persistedProducts()));
+        // });
       }
   }))
 );

@@ -5,34 +5,27 @@ import { ProductViewModel } from '../components/product/view-model/product.vm';
 export function setSearchQuery(
   searchQuery: string
 ): PartialStateUpdater<PantrySlice> {
-  return (_) => ({ searchQuery });
+  return () => ({ searchQuery });
 }
 
 export function updateProductList(
   product: ProductViewModel
 ): PartialStateUpdater<PantrySlice> {
-  product.lastUpdated = new Date();
   return (state) => {
-      //check if product exists and if so get the index
-      const productIndex = state.products.findIndex(p => p.id === product.id);
-      if (productIndex !== -1) {
-        //update the product
-        const updatedProducts = [...state.products];
-
-        updatedProducts[productIndex] = product;
-
-        return {
-          products: updatedProducts.sort((a, b) => a.name.localeCompare(b.name)),
-          productsView: updatedProducts.sort((a, b) => a.name.localeCompare(b.name))
-        };
-      }
-    //if product doesn't exist, add it
+      //check if product exists
+    if (state.products.find(p => p.id === product.id)) {
       return {
-        products: [...state.products, product].sort((a, b) => a.name.localeCompare(b.name)),
-        productsView: [...state.productsView, product].sort((a, b) => a.name.localeCompare(b.name))
+        products: state.products.map(p => p.id === product.id ? { id: product.id, name: product.name, categoryId: product.categoryId } : p),
+        productsView: state.productsView.map(p => p.id === product.id ? product : p).sort((a, b) => a.name.localeCompare(b.name)),
       }
-    };
-  };
+    } else {
+      return {
+        products: [...state.products, { id: product.id, name: product.name, categoryId: product.categoryId }],
+        productsView: [...state.productsView, product].sort((a, b) => a.name.localeCompare(b.name)),
+      }
+    }
+  }
+};
 
 
 export function updatePantryListItemViewModel(

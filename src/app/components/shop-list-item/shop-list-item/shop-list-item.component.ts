@@ -1,16 +1,14 @@
 import {
   Component,
-  computed,
   inject,
   input,
   output,
-  signal,
 } from '@angular/core';
 import { ShopListStore } from '../../../pages/shop-list/store/shopListStore';
 import { QuantityFormComponent } from '../../quantity-form/quantity-form.component';
 import { ShopListViewModel } from '../../../pages/shop-list/store/shop-list.vm';
 
-type ToggleQuantity = {
+interface ToggleQuantity {
   product: ShopListViewModel;
   quantity: number;
 };
@@ -26,10 +24,10 @@ export class ShopListItemComponent {
   readonly shopListStore = inject(ShopListStore);
 
   readonly item = input.required<ShopListViewModel>();
-  readonly toggle = output<ToggleQuantity>();
+  readonly toggleQty = output<ToggleQuantity>();
   readonly toggleChecks = output<string>();
 
   toggleQuantity(quantity: number) {
-    this.toggle.emit({ product: this.item(), quantity });
+    this.toggleQty.emit({ product: this.item(), quantity });
   }
 }

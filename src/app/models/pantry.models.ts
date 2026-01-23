@@ -10,15 +10,15 @@ export interface Product {
   categoryId: string;
 }
 
-export interface Pantry{
+export interface Inventory {
   id: string;
-  name: string;
+  quantity: number;
+  expiryDate?: Date;
+  lastUpdated?: Date;
 }
 
-export interface PantryItem {
+export interface ShopList {
   id: string;
-  pantryId: string;
-  productId: string;
   quantity: number;
-  lastUpdated: Date;
+  checked: boolean;
 }

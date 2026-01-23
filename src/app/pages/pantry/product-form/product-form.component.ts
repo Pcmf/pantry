@@ -18,8 +18,7 @@ export class ProductFormComponent implements OnInit {
   readonly catStore = inject(CategoryStore);
 
   private readonly id = this.route.snapshot.params['id'];
-  product =
-    Object.values(this.store.products()).find((p) => p.id === this.id) || null;
+  product = this.store.productsView().find((p) => p.id === this.id) || null;
   public categories = this.catStore.categories();
 
   ngOnInit() {
@@ -42,7 +41,7 @@ export class ProductFormComponent implements OnInit {
   }
 
   save() {
-    this.store.updateProductList(this.product!);
+    this.store.addToProductList(this.product!);
     window.history.back();
   }
 

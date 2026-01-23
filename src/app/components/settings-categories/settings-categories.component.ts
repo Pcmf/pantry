@@ -33,6 +33,11 @@ export class SettingsCategoriesComponent {
 
     ref.closed.subscribe((result) => {
       if (!result) return;
+      if (result.id) {
+        this.store.updateCategory(result);
+        return;
+      }
+      result.id = crypto.randomUUID();
       this.store.addCategory(result);
     });
   }

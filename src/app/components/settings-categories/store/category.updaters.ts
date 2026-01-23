@@ -18,3 +18,5 @@
 //     }
 //   }
 // }
+
+// The problem is this way categories are dependent of index

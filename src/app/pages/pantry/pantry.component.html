@@ -1,5 +1,5 @@
 <div class="container">
-  @let products = store.products();
+  @let products = store.productsView();
   @for (item of products; track item.id) {
     <article>
       <app-product
@@ -7,7 +7,7 @@
         [shopList]="shopListStore.items()"
         (changeShopListQuantity)="shopListStore.changeQuantity(item, $event)"
         (edit)="onEdit($event)"
-        (takeOutProduct)="onTakeOut($event)"
+        (takeOutProduct)="onTakeOut(item)"
       ></app-product>
     </article>
   }

@@ -1,27 +1,150 @@
 {
   "products": [
-    { "id": "1", "name": "Apple", "categoryId": "1" },
-    { "id": "2", "name": "Banana", "categoryId": "1" },
-    { "id": "3", "name": "Carrot", "categoryId": "2" },
-    { "id": "4", "name": "Broccoli", "categoryId": "2" },
-    { "id": "5", "name": "Milk", "categoryId": "3" },
-    { "id": "6", "name": "Cheese", "categoryId": "3" },
-    { "id": "7", "name": "Chicken", "categoryId": "4" },
-    { "id": "8", "name": "Beef", "categoryId": "4" },
-    { "id": "9", "name": "Rice", "categoryId": "5" },
-    { "id": "10", "name": "Bread", "categoryId": "5" }
+    {
+      "id": "c5b0df78-91c3-463b-a720-338d2b53a87e",
+      "name": "Apple",
+      "categoryId": "1"
+    },
+    {
+      "id": "5ed7517c-c332-451d-9ed0-fb2630b9e36a",
+      "name": "Beef",
+      "categoryId": "4"
+    },
+    {
+      "id": "79395170-bddd-46f6-87a9-ab8bd56c76d8",
+      "name": "Frozen Peas",
+      "categoryId": "e43b2644-a7a1-468c-a542-5587b74141b0"
+    },
+    {
+      "id": "df9dbef6-e681-4307-b756-6ecda992a500",
+      "name": "Chiken wings",
+      "categoryId": "4"
+    },
+    {
+      "id": "a7e701fb-9d98-47db-b16a-ffb60253ad47",
+      "name": "Rice",
+      "categoryId": "5"
+    },
+    {
+      "id": "99fc08cf-4065-47c2-a6e4-36d1d22dad63",
+      "name": "Red beans",
+      "categoryId": "3272fb02-a042-44b2-8f0b-b3354ae1d6af"
+    },
+    {
+      "id": "6acd7480-839b-4cbb-aae6-576ecc7450b9",
+      "name": "Bananas",
+      "categoryId": "1"
+    },
+    {
+      "id": "f3972209-7edc-4980-9293-b76384c9e3ca",
+      "name": "Porc chop",
+      "categoryId": "4"
+    },
+    {
+      "id": "9ebf7ade-3761-4ef6-b513-846f6596862d",
+      "name": "Salmon",
+      "categoryId": "d6130e58-b4b7-4d8b-abc0-72c5a2557ce1"
+    },
+    {
+      "id": "8d987ca6-47e8-4769-9fd9-458c9280460a",
+      "name": "Milk",
+      "categoryId": "3"
+    }
+  ],
+  "shoplist": [],
+  "inventory": [
+    {
+      "id": "c5b0df78-91c3-463b-a720-338d2b53a87e",
+      "quantity": 14,
+      "lastUpdated": "2026-01-22T17:57:24.356Z"
+    },
+    {
+      "id": "5ed7517c-c332-451d-9ed0-fb2630b9e36a",
+      "quantity": 5,
+      "lastUpdated": "2026-01-22T17:56:20.583Z"
+    },
+    {
+      "id": "79395170-bddd-46f6-87a9-ab8bd56c76d8",
+      "quantity": 3,
+      "lastUpdated": "2026-01-22T18:28:13.260Z"
+    },
+    {
+      "id": "df9dbef6-e681-4307-b756-6ecda992a500",
+      "quantity": 7,
+      "lastUpdated": "2026-01-22T22:51:21.970Z"
+    },
+    {
+      "id": "a7e701fb-9d98-47db-b16a-ffb60253ad47",
+      "quantity": 1,
+      "lastUpdated": "2026-01-22T22:30:41.594Z"
+    },
+    {
+      "id": "99fc08cf-4065-47c2-a6e4-36d1d22dad63",
+      "quantity": 2,
+      "lastUpdated": "2026-01-22T22:30:28.367Z"
+    },
+    {
+      "id": "6acd7480-839b-4cbb-aae6-576ecc7450b9",
+      "quantity": 1,
+      "lastUpdated": "2026-01-22T22:51:36.592Z"
+    },
+    {
+      "id": "f3972209-7edc-4980-9293-b76384c9e3ca",
+      "quantity": 2,
+      "lastUpdated": "2026-01-22T22:50:42.968Z"
+    },
+    {
+      "id": "9ebf7ade-3761-4ef6-b513-846f6596862d",
+      "quantity": 1,
+      "lastUpdated": "2026-01-22T22:51:06.331Z"
+    },
+    {
+      "id": "8d987ca6-47e8-4769-9fd9-458c9280460a",
+      "quantity": 2,
+      "expiryDate": "2026-01-26",
+      "lastUpdated": "2026-01-22T22:42:06.722Z"
+    }
   ],
   "categories": [
-    { "id": "1", "name": "Fruits", "icon": "🍎" },
-    { "id": "2", "name": "Vegetables", "icon": "🥦" },
-    { "id": "3", "name": "Dairy", "icon": "🥛" },
-    { "id": "4", "name": "Meat", "icon": "🥩" },
-    { "id": "5", "name": "Grains", "icon": "🌾" }
-  ],
-  "shop-list": [],
-  "pantry-products": [
-  ],
-  "pantry-shop-list": [
+    {
+      "id": "1",
+      "name": "Fruits",
+      "icon": "🍎"
+    },
+    {
+      "id": "2",
+      "name": "Fresh Vegetables",
+      "icon": "🥦"
+    },
+    {
+      "id": "3",
+      "name": "Dairy",
+      "icon": "🥛"
+    },
+    {
+      "id": "4",
+      "name": "Meat",
+      "icon": "🥩"
+    },
+    {
+      "id": "5",
+      "name": "Grains",
+      "icon": "🌾"
+    },
+    {
+      "id": "d6130e58-b4b7-4d8b-abc0-72c5a2557ce1",
+      "name": "Fish",
+      "icon": "🐟"
+    },
+    {
+      "id": "3272fb02-a042-44b2-8f0b-b3354ae1d6af",
+      "name": "Cans grain",
+      "icon": "🥫"
+    },
+    {
+      "id": "e43b2644-a7a1-468c-a542-5587b74141b0",
+      "name": "Frozen Vegetables",
+      "icon": "🥶🫛"
+    }
   ]
-
 }

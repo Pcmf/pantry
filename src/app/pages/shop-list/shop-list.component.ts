@@ -29,7 +29,7 @@ export class ShopListComponent {
     this.shopListStore.toggleChecked(id);
   }
 
-  toggleAllChecks(value: any) {
+  toggleAllChecks(value: boolean) {
     this.shopListStore.toggleAllChecked(value);
   }
 
@@ -38,9 +38,9 @@ export class ShopListComponent {
     this.shopListStore.items().map((item) => {
       if (item.checked) {
         const product = this.appStore
-          .products()
+          .productsView()
           .find((product) => product.id === item.id);
-        this.appStore.updateProductQuantity(product!.id, item.quantity);
+        this.appStore.updateProductQuantity(product!, item.quantity);
         this.shopListStore.removeFromList(item.id);
       }
     });

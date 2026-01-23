@@ -1,5 +1,4 @@
 import { Component, input, output } from '@angular/core';
-import { ProductViewModel } from '../product/view-model/product.vm';
 
 @Component({
   selector: 'app-quantity-form',
