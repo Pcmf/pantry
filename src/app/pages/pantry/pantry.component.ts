@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ShopListStore } from '../shop-list/store/shopListStore';
 import { PantryService } from '../../pantry-services/pantry.service';
-import { ProductViewModel } from '../../components/product/view-model/product.vm';
+import { ProductViewModel } from '../../models/pantry.models';
 
 @Component({
   selector: 'app-pantry',
@@ -22,13 +22,14 @@ export class PantryComponent {
   readonly router = inject(Router);
   readonly pantryService = inject(PantryService);
 
+
   onEdit(productId: string) {
     this.router.navigate(['/edit', productId]);
   }
 
   onTakeOut(product: ProductViewModel) {
     //remove one from Product
-    this.store.updateProductQuantity(product, -1);
+    this.store.consumeFromInventory(product, -1);
 
   }
 

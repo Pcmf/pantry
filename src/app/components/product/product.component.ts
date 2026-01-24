@@ -6,11 +6,11 @@ import {
   input,
   output,
 } from '@angular/core';
-import { ProductViewModel } from './view-model/product.vm';
 import { diffInDaysFromToday } from '../../helpers/date.helper';
 import { QuantityFormComponent } from '../quantity-form/quantity-form.component';
 import { ShopListStore } from '../../pages/shop-list/store/shopListStore';
 import { ShopListViewModel } from '../../pages/shop-list/store/shop-list.vm';
+import { ProductViewModel } from '../../models/pantry.models';
 
 @Component({
   selector: 'app-product',

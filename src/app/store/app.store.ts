@@ -1,98 +1,145 @@
-import { patchState, signalStore, withHooks, withMethods, withProps, withState } from "@ngrx/signals";
-import { initialPantrySlice } from "./app.slice";
-import { inject } from "@angular/core";
-import { createPantryListItemViewModel } from "./app-vm.builders";
-import * as updaters from "./app.updaters";
-import { ProductViewModel } from "../components/product/view-model/product.vm";
-import { updatePantryListItemViewModel } from "./app.updaters";
+import { patchState, signalStore, withComputed, withHooks, withMethods, withState } from "@ngrx/signals";
+import { initialPantrySlice, PantrySlice } from "./app.slice";
 import { rxMethod } from "@ngrx/signals/rxjs-interop";
-import { forkJoin, map, mergeAll, tap } from "rxjs";
+import { forkJoin, pipe, switchMap, tap } from "rxjs";
+import { tapResponse } from "@ngrx/operators";
+import { computed, inject } from "@angular/core";
 import { PantryService } from "../pantry-services/pantry.service";
+import { Inventory, ProductViewModel } from "../models/pantry.models";
+import { buildProductsViewModel } from "./app-vm.builders";
 
 export const AppStore = signalStore(
   { providedIn: 'root' },
-  withState(initialPantrySlice),
-  withProps(() => { const _pantryService = inject(PantryService); return { pantryService: _pantryService }}),
-  withMethods((store) => ({
-    //search
-    setSearchQuery(searchQuery: string) {
-      console.log(searchQuery, store.productsView());
-      patchState(store, (state) => ({
-        productsView: updatePantryListItemViewModel(state.productsView, searchQuery),
-        searchQuery,
-      }));
-    },
-    //Product list updates
-    addToProductList: (product: ProductViewModel) => {
-      const _product = {
-        id: product.id,
-        name: product.name,
-        categoryId: product.categoryId,
-      };
-      if (store.productsView().find(p => p.id === product.id)) {
-        store.pantryService.updateProduct(_product, product.quantity).subscribe();
-      } else {
-        store.pantryService.addProduct(product, product.quantity).subscribe();
-      }
+  withState<PantrySlice>(initialPantrySlice),
+  withComputed((state) => ({
 
-      return patchState(store, updaters.updateProductList(product));
-    },
-    //Quantities update
-    updateProductQuantity: (product: ProductViewModel, quantity: number) => {
-      const _product = {
-        id: product.id,
-        name: product.name,
-        categoryId: product.categoryId,
-      };
-      store.pantryService.updateProduct(_product, product.quantity + quantity).subscribe();
+    productsView: computed(() =>
+      buildProductsViewModel(
+        state.products(),
+        state.inventory(),
+        state.categories(),
+        state.searchQuery()
+      ).sort((a, b) => a.name.localeCompare(b.name))
+    ),
+    productsMap: computed(() => Object.fromEntries(state.products().map(p => [p.id, p]))),
+    inventoryMap: computed(() => Object.fromEntries(state.inventory().map(i => [i.id, i]))),
+    categoriesMap: computed(() => Object.fromEntries(state.categories().map(c => [c.id, c]))),
+  })),
+  withMethods((store, _pantryService = inject(PantryService)) => ({
 
-      return patchState(store, (state) => ({
-        productsView: state.productsView
-          .map(p => p.id === product.id ? { ...p, quantity: p.quantity + quantity } : p)
-      }
-    ));
-    },
-  })
-  ),
-  withHooks(store => ({
-      onInit() {
-        //initialize products)
-        const getProductsApi = rxMethod<void>(input$ => {
-          return input$.pipe(
-            map(() => forkJoin({pro: store.pantryService.getProducts(), cat: store.pantryService.getCategories(), inventory: store.pantryService.getInventory()})),
-            mergeAll(),
-            tap(({ pro, cat, inventory }) => {
-
-              patchState(store,
-                {
-                  products: pro,
-                  productsView: createPantryListItemViewModel(pro, cat, inventory, '').sort((a, b) => a.name.localeCompare(b.name))
-                }
-              );
-            }),
-          );
-
+    loadAll: rxMethod<void>(pipe(
+      tap(() => patchState(store, { isBusy: true })),
+      switchMap(() => forkJoin({
+        products: _pantryService.getProducts(),
+        inventory: _pantryService.getInventory(),
+        categories: _pantryService.getCategories(),
+      }).pipe(
+        tapResponse({
+          next: ({ products, inventory, categories }) => {
+            patchState(store, { products, inventory, categories, isBusy: false });
+          },
+          error: (error) => {
+            patchState(store, { isBusy: false });
+            console.log('Error loading data', error);
           }
-        )
-        getProductsApi();
+        })
+      )))
+    ),
+    addToProducts: rxMethod<{product: ProductViewModel, quantity?: number }> (
+      //also add to inventory
+      pipe(
+        tap(() => patchState(store, { isBusy: true })),
+        switchMap(({ product, quantity = 0 }) =>
+          _pantryService.addProduct(product, quantity).pipe(
+            tapResponse({
+              next: (product) => patchState(store,
+                { products: [...store.products(), product] },
+                { inventory: [...store.inventory(), { ...product, quantity: quantity }] }
+              ),
+              error: (error) => console.log('Error adding product', error)
+            })
+          )
+        ),
+        tap(() => patchState(store, { isBusy: false })),
+      )
+    ),
+    updateProduct: rxMethod<{product: ProductViewModel, quantity?: number }> (
+      //also add to inventory
+      pipe(
+        tap(() => patchState(store, { isBusy: true })),
+        switchMap(({ product, quantity = 0 }) =>
+          _pantryService.updateProduct(product, quantity).pipe(
+            tapResponse({
+              next: (product) => patchState(store,
+                { products: [...store.products().map(p => p.id === product.id ? product : p)] },
+                { inventory: [...store.inventory().map(p => p.id === product.id ? {...p, quantity: quantity} : p)] }
+              ),
+              error: (error) => console.log('Error adding product', error)
+            })
+          )
+        ),
+        tap(() => patchState(store, { isBusy: false })),
+      )
+    ),
 
-        /**
-         * Persistency on localStorage
-         */
-        //create a signal with products to persist to local storage on changes()
-        // const persistedProducts = computed(() => store.products());
+    addToInventory(product: ProductViewModel, quantity: number) {
+      const _product: Inventory = {
+        id:product.id,
+        quantity: product.quantity + quantity,
+        expiryDate: product.expiryDate,
+        lastUpdated: new Date()
+      };
+      _pantryService.updateInventory(_product).pipe(
+        tapResponse({
+          next: (product) => patchState(store, { inventory: [...store.inventory(), product] }),
+          error: (error) => console.log('Error adding product', error)
 
-        // const productsLocalStore = localStorage.getItem('pantry_products');
-        // //if exists on localStorage load the appStore with them
-        // if (productsLocalStore) {
-        //   const products = JSON.parse(productsLocalStore);
-        //   patchState(store, { products, productsView: products});
-        // }
+        })
+      ).subscribe();
+    },
+    consumeFromInventory(product: ProductViewModel, quantity: number) {
+      const _product = {
+        id: product.id,
+        quantity: product.quantity + quantity,
+        expiryDate: product.expiryDate,
+        lastUpdated: new Date()
+      };
+      _pantryService.updateInventory(_product).subscribe();
+      patchState(store, { inventory: store.inventory().map(item => {
+        if (item.id === product.id) {
+          return {
+            ...item,
+            quantity: item.quantity + quantity
+          }
+        }
+        return item;
+      })})
+    },
+    addToShoppingList(product: ProductViewModel) {
+      _pantryService.addShopListItem({
+        id: product.id,
+        quantity: 1,
+        checked: false
+      }).subscribe();
+    },
+    markAsBought(id: string) {
+      _pantryService.updateShopListItem({  // not correct
+        id: id,
+        quantity: 0,
+        checked: true
+      }).subscribe();
+    },
+    setSearchQuery(query: string) {
+      patchState(store, { searchQuery: query });
+    },
 
-        // //when products change, persist to local storage
-        // effect(() => {
-        //   localStorage.setItem('pantry_products', JSON.stringify(persistedProducts()));
-        // });
+
+
+  })),
+  withHooks((store) => ({
+      onInit() {
+        store.loadAll();
       }
-  }))
+    })
+  )
 );

@@ -1,5 +1,4 @@
-import { ProductViewModel } from "../../../components/product/view-model/product.vm";
-import { ShopList } from "../../../models/pantry.models";
+import { ShopList, ProductViewModel } from "../../../models/pantry.models";
 import { ShopListViewModel } from "./shop-list.vm";
 
 export function buildShopListViewModel(shopList: ShopList[], products: ProductViewModel[]) {
@@ -8,7 +7,7 @@ export function buildShopListViewModel(shopList: ShopList[], products: ProductVi
     const item: ShopListViewModel = {
       name: product.name,
       id: product.id,
-      icon: product.categoryIcon,
+      icon: product?.categoryIcon ?? '',
       quantity: shopListItem.quantity,
       pantryQuantity: product.quantity,
       checked: shopListItem.checked,

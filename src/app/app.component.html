@@ -1,2 +1,8 @@
 <app-toolbar [name]="'MyPantry'" (searchQuery)="onSearch($event)"></app-toolbar>
 <router-outlet></router-outlet>
+@if(store.isBusy()) {
+  <div class="spinner">
+    Loading ...
+  </div>
+}
+

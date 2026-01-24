@@ -22,3 +22,13 @@ export interface ShopList {
   quantity: number;
   checked: boolean;
 }
+
+export interface ProductViewModel {
+  id: string;
+  name: string;
+  quantity: number;
+  expiryDate?: Date;
+  categoryId: string;
+  categoryIcon: string;
+  lastUpdated?: Date;
+}

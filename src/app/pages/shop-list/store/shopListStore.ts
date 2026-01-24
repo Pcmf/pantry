@@ -7,7 +7,6 @@ import {
 } from '@ngrx/signals';
 import { inject } from '@angular/core';
 import { initialShopListSlice } from './shop-list.slice';
-import { ProductViewModel } from '../../../components/product/view-model/product.vm';
 import { ShopListViewModel } from './shop-list.vm';
 import { PantryService } from '../../../pantry-services/pantry.service';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
@@ -15,6 +14,7 @@ import { pipe, switchMap, tap } from 'rxjs';
 import { tapResponse } from '@ngrx/operators';
 import { buildShopListViewModel } from './shop-list.builders';
 import { AppStore } from '../../../store/app.store';
+import { ProductViewModel } from '../../../models/pantry.models';
 
 
 export const ShopListStore = signalStore(

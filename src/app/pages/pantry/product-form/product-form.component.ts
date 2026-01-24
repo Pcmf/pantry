@@ -25,7 +25,7 @@ export class ProductFormComponent implements OnInit {
     if (!this.route.snapshot.params['id']) {
       //initialize a new product
       this.product = {
-        id: crypto.randomUUID(),
+        id: '',
         name: '',
         quantity: 0,
         categoryId: this.categories[0].id,
@@ -41,7 +41,12 @@ export class ProductFormComponent implements OnInit {
   }
 
   save() {
-    this.store.addToProductList(this.product!);
+    if (!this.product!.id) {
+      this.product!.id = crypto.randomUUID()
+      this.store.addToProducts({ product: this.product!, quantity: this.product!.quantity });
+    } else {
+      this.store.updateProduct({ product: this.product!, quantity: this.product!.quantity });
+    }
     window.history.back();
   }
 

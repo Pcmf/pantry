@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ToolbarComponent } from "./components/toolbar/toolbar.component";
 import { AppStore } from './store/app.store';
@@ -14,5 +14,13 @@ export class AppComponent {
   readonly store = inject(AppStore);
   onSearch(query: string) {
     this.store.setSearchQuery(query);
+  }
+
+  constructor() {
+    effect(() => {
+  if (this.store.isBusy()) {
+    console.log('spinner');
+  }
+});
   }
 }
