@@ -79,6 +79,11 @@
       "id": "b8b88671-de4c-4031-bfd3-d6506757bb09",
       "name": "Peachs",
       "categoryId": "1"
+    },
+    {
+      "id": "2e6e4837-90bc-471f-ba03-9dfe23ae865c",
+      "name": "Onions",
+      "categoryId": "2"
     }
   ],
   "inventory": [
@@ -105,14 +110,14 @@
     },
     {
       "id": "a7e701fb-9d98-47db-b16a-ffb60253ad47",
-      "quantity": 2,
+      "quantity": 0,
       "expiryDate": "2026-02-04",
-      "lastUpdated": "2026-01-24T11:42:06.269Z"
+      "lastUpdated": "2026-01-25T09:50:40.462Z"
     },
     {
       "id": "99fc08cf-4065-47c2-a6e4-36d1d22dad63",
-      "quantity": 1,
-      "lastUpdated": "2026-01-23T18:08:02.723Z"
+      "quantity": 0,
+      "lastUpdated": "2026-01-24T18:37:50.848Z"
     },
     {
       "id": "6acd7480-839b-4cbb-aae6-576ecc7450b9",
@@ -121,20 +126,20 @@
     },
     {
       "id": "f3972209-7edc-4980-9293-b76384c9e3ca",
-      "quantity": 5,
-      "lastUpdated": "2026-01-24T11:55:36.039Z"
+      "quantity": 0,
+      "lastUpdated": "2026-01-24T18:47:29.269Z"
     },
     {
       "id": "9ebf7ade-3761-4ef6-b513-846f6596862d",
-      "quantity": 1,
+      "quantity": 0,
       "expiryDate": "2026-01-28",
-      "lastUpdated": "2026-01-24T11:40:20.354Z"
+      "lastUpdated": "2026-01-25T09:50:52.537Z"
     },
     {
       "id": "8d987ca6-47e8-4769-9fd9-458c9280460a",
-      "quantity": 1,
-      "expiryDate": "2026-01-26",
-      "lastUpdated": "2026-01-23T18:08:20.206Z"
+      "quantity": 6,
+      "expiryDate": "2026-02-07",
+      "lastUpdated": "2026-01-26T09:07:53.818Z"
     },
     {
       "id": "34f7e7ec-21e5-403d-8f3d-9e6e2fe31093",
@@ -143,31 +148,52 @@
     },
     {
       "id": "4dcda8d5-2340-406d-b1ab-62cbf96078cc",
-      "quantity": 7,
-      "lastUpdated": "2026-01-24T11:10:16.202Z"
+      "quantity": 6,
+      "lastUpdated": "2026-01-24T18:45:16.863Z"
     },
     {
       "id": "5fa74019-3c04-4066-a18e-4a6a438298e4",
-      "quantity": 2,
-      "lastUpdated": "2026-01-24T10:23:55.662Z"
+      "quantity": 1,
+      "lastUpdated": "2026-01-24T18:15:04.023Z"
     },
     {
       "id": "ea7581a9-4120-429a-8a71-cfce1683d3ab",
-      "quantity": 6,
-      "lastUpdated": "2026-01-24T10:54:16.900Z"
+      "quantity": 5,
+      "lastUpdated": "2026-01-24T18:47:24.543Z"
     },
     {
       "id": "5b4201d0-b391-4d49-9f16-b61b7ae8d2c7",
-      "quantity": 2,
-      "lastUpdated": "2026-01-24T11:00:15.313Z"
+      "quantity": 0,
+      "lastUpdated": "2026-01-25T09:49:42.150Z"
     },
     {
       "id": "b8b88671-de4c-4031-bfd3-d6506757bb09",
-      "quantity": 4,
-      "lastUpdated": "2026-01-24T11:57:35.625Z"
+      "quantity": 3,
+      "lastUpdated": "2026-01-24T18:33:49.046Z"
+    },
+    {
+      "id": "2e6e4837-90bc-471f-ba03-9dfe23ae865c",
+      "quantity": 1,
+      "lastUpdated": "2026-01-24T18:33:38.563Z"
     }
   ],
-  "shoplist": [],
+  "shoplist": [
+    {
+      "id": "b8b88671-de4c-4031-bfd3-d6506757bb09",
+      "quantity": 2,
+      "checked": false
+    },
+    {
+      "id": "99fc08cf-4065-47c2-a6e4-36d1d22dad63",
+      "quantity": 2,
+      "checked": false
+    },
+    {
+      "id": "5b4201d0-b391-4d49-9f16-b61b7ae8d2c7",
+      "quantity": 0,
+      "checked": false
+    }
+  ],
   "categories": [
     {
       "id": "1",

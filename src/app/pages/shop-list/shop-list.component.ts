@@ -40,7 +40,7 @@ export class ShopListComponent {
         const product = this.appStore
           .productsView()
           .find((product) => product.id === item.id);
-        this.appStore.addToInventory(product!, item.quantity);
+        this.appStore.addToInventory(product!);
         this.shopListStore.removeFromList(item.id);
       }
     });

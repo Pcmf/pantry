@@ -5,8 +5,9 @@ import { forkJoin, pipe, switchMap, tap } from "rxjs";
 import { tapResponse } from "@ngrx/operators";
 import { computed, inject } from "@angular/core";
 import { PantryService } from "../pantry-services/pantry.service";
-import { Inventory, ProductViewModel } from "../models/pantry.models";
+import { ProductViewModel } from "../models/pantry.models";
 import { buildProductsViewModel } from "./app-vm.builders";
+import { toEntityMap } from "./app-helper";
 
 export const AppStore = signalStore(
   { providedIn: 'root' },
@@ -15,15 +16,12 @@ export const AppStore = signalStore(
 
     productsView: computed(() =>
       buildProductsViewModel(
-        state.products(),
-        state.inventory(),
-        state.categories(),
+        Object.values(state.products()),
+        Object.values(state.inventory()),
+        Object.values(state.categories()),
         state.searchQuery()
       ).sort((a, b) => a.name.localeCompare(b.name))
     ),
-    productsMap: computed(() => Object.fromEntries(state.products().map(p => [p.id, p]))),
-    inventoryMap: computed(() => Object.fromEntries(state.inventory().map(i => [i.id, i]))),
-    categoriesMap: computed(() => Object.fromEntries(state.categories().map(c => [c.id, c]))),
   })),
   withMethods((store, _pantryService = inject(PantryService)) => ({
 
@@ -36,7 +34,12 @@ export const AppStore = signalStore(
       }).pipe(
         tapResponse({
           next: ({ products, inventory, categories }) => {
-            patchState(store, { products, inventory, categories, isBusy: false });
+            patchState(store, {
+              products: toEntityMap(products),
+              inventory: toEntityMap(inventory),
+              categories: toEntityMap(categories),
+              isBusy: false
+            });
           },
           error: (error) => {
             patchState(store, { isBusy: false });
@@ -45,17 +48,38 @@ export const AppStore = signalStore(
         })
       )))
     ),
-    addToProducts: rxMethod<{product: ProductViewModel, quantity?: number }> (
+    addToProducts: rxMethod<{ product: ProductViewModel, quantity?: number }>(
       //also add to inventory
       pipe(
         tap(() => patchState(store, { isBusy: true })),
         switchMap(({ product, quantity = 0 }) =>
-          _pantryService.addProduct(product, quantity).pipe(
+        forkJoin(
+          {
+            createdProduct: _pantryService.addProduct(product),
+            createdInventory: _pantryService.addInventory({
+              id: product.id,
+              quantity: quantity,
+              expiryDate: product.expiryDate,
+              lastUpdated: new Date()
+            })
+          }).pipe(
             tapResponse({
-              next: (product) => patchState(store,
-                { products: [...store.products(), product] },
-                { inventory: [...store.inventory(), { ...product, quantity: quantity }] }
-              ),
+              next: ({createdProduct, createdInventory}) => {
+                patchState(store,
+                  {
+                    products: {
+                      ...store.products(),
+                      [createdProduct.id]: createdProduct
+                    }
+                  }
+                );
+                patchState(store, {
+                  inventory: {
+                    ...store.inventory(),
+                    [createdInventory.id]: createdInventory
+                  }
+                });
+              },
               error: (error) => console.log('Error adding product', error)
             })
           )
@@ -68,53 +92,70 @@ export const AppStore = signalStore(
       pipe(
         tap(() => patchState(store, { isBusy: true })),
         switchMap(({ product, quantity = 0 }) =>
-          _pantryService.updateProduct(product, quantity).pipe(
-            tapResponse({
-              next: (product) => patchState(store,
-                { products: [...store.products().map(p => p.id === product.id ? product : p)] },
-                { inventory: [...store.inventory().map(p => p.id === product.id ? {...p, quantity: quantity} : p)] }
-              ),
-              error: (error) => console.log('Error adding product', error)
-            })
+          forkJoin(
+            {
+              updatedProduct: _pantryService.updateProduct(product, quantity),
+              updatedInventory: _pantryService.updateInventory({
+                id: product.id,
+                quantity: quantity,
+                expiryDate: product.expiryDate,
+                lastUpdated: new Date()
+              })
+            }).pipe(
+              tapResponse({
+                next: ({updatedProduct, updatedInventory}) => patchState(store,
+                  { products: { ...store.products(), [updatedProduct.id]: updatedProduct } },
+                  { inventory: { ...store.inventory(), [updatedInventory.id]: updatedInventory }}
+                ),
+                error: (error) => console.log('Error adding product', error)
+              })
           )
         ),
         tap(() => patchState(store, { isBusy: false })),
       )
     ),
 
-    addToInventory(product: ProductViewModel, quantity: number) {
-      const _product: Inventory = {
-        id:product.id,
-        quantity: product.quantity + quantity,
-        expiryDate: product.expiryDate,
-        lastUpdated: new Date()
-      };
-      _pantryService.updateInventory(_product).pipe(
-        tapResponse({
-          next: (product) => patchState(store, { inventory: [...store.inventory(), product] }),
-          error: (error) => console.log('Error adding product', error)
+   addToInventory: rxMethod<{ id: string; quantity: number }>(
+      pipe(
+        tap(() => patchState(store, { isBusy: true })),
+        switchMap(({ id, quantity }) =>
+          _pantryService.updateInventory({ id, quantity }).pipe(
+            tapResponse({
+              next: (inv) => patchState(store, {
+                inventory: {
+                  ...store.inventory(),
+                  [inv.id]: inv
+                },
+                isBusy: false
+              }),
+              error: () => patchState(store, { isBusy: false })
+            })
+          )
+        )
+      )
+    ),
+    consumeFromInventory: rxMethod<ProductViewModel>(
+      pipe(
+        tap(() => patchState(store, { isBusy: true })),
+        switchMap((product) =>
+          _pantryService.updateInventory({
+            id: product.id,
+            quantity: Math.max(0, product.quantity - 1),
+            expiryDate: product.expiryDate,
+            lastUpdated: new Date()
+          }).pipe(
+            tapResponse({
+              next: (product) => patchState(store, { inventory: { ...store.inventory(), [product.id]: product } }),
+              error: () => console.log('Error consuming from inventory')
+            })
+          )
+        ),
+        tap(d => console.log('after switchMap',d)),
 
-        })
-      ).subscribe();
-    },
-    consumeFromInventory(product: ProductViewModel, quantity: number) {
-      const _product = {
-        id: product.id,
-        quantity: product.quantity + quantity,
-        expiryDate: product.expiryDate,
-        lastUpdated: new Date()
-      };
-      _pantryService.updateInventory(_product).subscribe();
-      patchState(store, { inventory: store.inventory().map(item => {
-        if (item.id === product.id) {
-          return {
-            ...item,
-            quantity: item.quantity + quantity
-          }
-        }
-        return item;
-      })})
-    },
+        tap(() => patchState(store, { isBusy: false }))
+      )
+    ),
+
     addToShoppingList(product: ProductViewModel) {
       _pantryService.addShopListItem({
         id: product.id,

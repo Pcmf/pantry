@@ -9,6 +9,9 @@ To start a local development server, run:
 ```bash
 ng serve
 ```
+To start the db.json server on port 3000:
+
+npx json-server --watch db.json --port 3000
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 

@@ -29,7 +29,7 @@ export class PantryComponent {
 
   onTakeOut(product: ProductViewModel) {
     //remove one from Product
-    this.store.consumeFromInventory(product, -1);
+    this.store.consumeFromInventory(product);
 
   }
 

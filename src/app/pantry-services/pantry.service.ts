@@ -21,24 +21,24 @@ export class PantryService {
     return this.http.get<Product[]>(`${this.environment.url}/products`)!;
   }
 
-  addProduct(product: ProductViewModel, quantity = 0) {
+  addProduct(product: Product) {
     const _product = {
       id: product.id,
       name: product.name,
       categoryId: product.categoryId,
     };
-    const _expiryDate = product?.expiryDate ?? undefined;
-    return this.http.post<Product>(`${this.environment.url}/products`, _product).pipe(
-      tapResponse({
-        next: (product: Product) => this.addInventory({
-          id: product.id,
-          quantity: quantity,
-          expiryDate: _expiryDate,
-          lastUpdated: new Date()
-        }).subscribe(),
-        error: (error) => console.log('Error adding product', error)
-      })
-    );
+    // const _expiryDate = product?.expiryDate ?? undefined;
+    return this.http.post<Product>(`${this.environment.url}/products`, _product);
+      // tapResponse({
+      //   next: (product: Product) => this.addInventory({
+      //     id: product.id,
+      //     quantity: quantity,
+      //     expiryDate: _expiryDate,
+      //     lastUpdated: new Date()
+      //   }).subscribe(),
+      //   error: (error) => console.log('Error adding product', error)
+      // })
+    // );
   }
 
   updateProduct(product: ProductViewModel, quantity: number) {
@@ -65,7 +65,7 @@ export class PantryService {
   }
 
   addInventory(product: Inventory  ) {
-    return this.http.post(`${this.environment.url}/inventory`, product);
+    return this.http.post<Inventory>(`${this.environment.url}/inventory`, product);
   }
   updateInventory(product: Inventory) {
     return this.http.put<Inventory>(`${this.environment.url}/inventory/${product.id}`, product);
