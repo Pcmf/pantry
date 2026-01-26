@@ -1,24 +1,39 @@
-<header class="toolbar">
+
+<div class="toolbar">
       <!-- App icon / Home -->
       <a routerLink="/" class="logo" aria-label="Home">
-        🥫
+        🥫<strong>{{ name() }}</strong>
       </a>
+
+      <input
+        type="text"
+        placeholder="Search..."
+        (input)="onSearch($any($event.target).value)"
+      />
 
       <!-- Navigation -->
       <nav class="nav">
+        <a routerLink="/new" tooltip="Add new product">
+          ➕
+        </a>
         <a
-          routerLink="/"
+          routerLink="/pantry"
           routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
         >
-          Home
+          🏠
+        </a>
+        <a
+          routerLink="/shop"
+          routerLinkActive="active"
+        >
+          🛒
         </a>
 
         <a
           routerLink="/settings"
           routerLinkActive="active"
         >
-          Settings
+          ⚙️
         </a>
       </nav>
-    </header>
+</div>

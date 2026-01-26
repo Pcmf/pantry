@@ -8,12 +8,22 @@ describe('ProductComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProductComponent]
+      imports: [ProductComponent],
+      providers: []
     })
     .compileComponents();
 
     fixture = TestBed.createComponent(ProductComponent);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('product', {
+      id: '1',
+      name: 'Test Product',
+      quantity: 5,
+      expiryDate: new Date(),
+      lastUpdated: new Date(),
+      categoryId: '1',
+      categoryIcon: 'test-icon'
+    })
     fixture.detectChanges();
   });
 

@@ -1,19 +1,69 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-
-export interface ProductItemView {
-  id: string;
-  name: string;
-  quantity: number;
-  categoryIcon: string; // e.g. 🥛 🥫 🍝
-}
+import { CommonModule, DatePipe } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input,
+  output,
+} from '@angular/core';
+import { diffInDaysFromToday } from '../../helpers/date.helper';
+import { QuantityFormComponent } from '../quantity-form/quantity-form.component';
+import { ShopListStore } from '../../pages/shop-list/store/shopListStore';
+import { ShopListViewModel } from '../../pages/shop-list/store/shop-list.vm';
+import { ProductViewModel } from '../../models/pantry.models';
 
 @Component({
   selector: 'app-product',
-  imports: [],
+  imports: [DatePipe, CommonModule, QuantityFormComponent],
   templateUrl: './product.component.html',
-  styleUrl: './product.component.scss'
+  styleUrl: './product.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ShopListStore],
 })
 export class ProductComponent {
-@Input({ required: true }) item!: ProductItemView;
-  @Output() edit = new EventEmitter<string>();
+  readonly product = input.required<ProductViewModel>();
+  readonly shopList = input.required<ShopListViewModel[]>();
+  readonly changeShopListQuantity = output<number>();
+  readonly edit = output<string>();
+  readonly takeOutProduct = output<string>();
+
+  readonly dueDays = computed(() =>
+    diffInDaysFromToday(this.product().expiryDate!)
+  );
+
+  readonly cartQuantity = computed(
+    () =>
+      this.shopList().find((item) => item.id === this.product().id)
+        ?.quantity ?? 0
+  );
+  readonly isInCart = computed(
+    () =>
+      this.shopList()
+        .find((item) => item.id === this.product().id) !== undefined
+  );
+
+  deadline = computed(() => {
+    const deadlineClass = [
+      '',
+      'within-deadline',
+      'expired',
+      'warning-deadline',
+    ];
+    if (!this.product().expiryDate) {
+      return deadlineClass[0];
+    } else {
+      if (this.dueDays() <= 0) {
+        return deadlineClass[2];
+      } else if (this.dueDays() <= 3) {
+        return deadlineClass[3];
+      } else {
+        return deadlineClass[1];
+      }
+    }
+  });
+
+  toggle(quantity: number) {
+    this.changeShopListQuantity.emit(quantity)
+  }
+
 }

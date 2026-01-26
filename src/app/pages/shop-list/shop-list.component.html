@@ -1,0 +1,31 @@
+<div class="container">
+  <header>
+    <h3>Shop List</h3>
+  </header>
+  @if (!shopListStore.items().length) {
+    <div class="empty">No products on the shop list.</div>
+  } @else {
+    @for (item of shopListStore.items(); track item.id) {
+      <article>
+        <app-shop-list-item
+          [item]="item"
+          (toggleQty)="toggleQuantity($event)"
+          (toggleChecks)="toggleChecks($event)"
+        ></app-shop-list-item>
+      </article>
+    }
+    <footer>
+      <div class="right">
+        <label
+          >Check / uncheck all
+          <input
+            type="checkbox"
+            #checkAll
+            (change)="toggleAllChecks($event.target.checked)"
+          />
+        </label>
+      </div>
+      <button type="button" (click)="done()">Done</button>
+    </footer>
+  }
+</div>

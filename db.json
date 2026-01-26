@@ -1,0 +1,239 @@
+{
+  "products": [
+    {
+      "id": "c5b0df78-91c3-463b-a720-338d2b53a87e",
+      "name": "Apple",
+      "categoryId": "1"
+    },
+    {
+      "id": "5ed7517c-c332-451d-9ed0-fb2630b9e36a",
+      "name": "Beef",
+      "categoryId": "4"
+    },
+    {
+      "id": "79395170-bddd-46f6-87a9-ab8bd56c76d8",
+      "name": "Frozen Peas",
+      "categoryId": "e43b2644-a7a1-468c-a542-5587b74141b0"
+    },
+    {
+      "id": "df9dbef6-e681-4307-b756-6ecda992a500",
+      "name": "Chiken wings",
+      "categoryId": "4"
+    },
+    {
+      "id": "a7e701fb-9d98-47db-b16a-ffb60253ad47",
+      "name": "Rice",
+      "categoryId": "5"
+    },
+    {
+      "id": "99fc08cf-4065-47c2-a6e4-36d1d22dad63",
+      "name": "Red beans",
+      "categoryId": "3272fb02-a042-44b2-8f0b-b3354ae1d6af"
+    },
+    {
+      "id": "6acd7480-839b-4cbb-aae6-576ecc7450b9",
+      "name": "Bananas",
+      "categoryId": "1"
+    },
+    {
+      "id": "f3972209-7edc-4980-9293-b76384c9e3ca",
+      "name": "Porc chop",
+      "categoryId": "4"
+    },
+    {
+      "id": "9ebf7ade-3761-4ef6-b513-846f6596862d",
+      "name": "Salmon",
+      "categoryId": "d6130e58-b4b7-4d8b-abc0-72c5a2557ce1"
+    },
+    {
+      "id": "8d987ca6-47e8-4769-9fd9-458c9280460a",
+      "name": "Milk",
+      "categoryId": "3"
+    },
+    {
+      "id": "34f7e7ec-21e5-403d-8f3d-9e6e2fe31093",
+      "name": "Kiwi",
+      "categoryId": "1"
+    },
+    {
+      "id": "4dcda8d5-2340-406d-b1ab-62cbf96078cc",
+      "name": "Spaghetti",
+      "categoryId": "5"
+    },
+    {
+      "id": "5fa74019-3c04-4066-a18e-4a6a438298e4",
+      "name": "Chocolat Milk",
+      "categoryId": "3"
+    },
+    {
+      "id": "ea7581a9-4120-429a-8a71-cfce1683d3ab",
+      "name": "Potatoes",
+      "categoryId": "2"
+    },
+    {
+      "id": "5b4201d0-b391-4d49-9f16-b61b7ae8d2c7",
+      "name": "Couscus",
+      "categoryId": "5"
+    },
+    {
+      "id": "b8b88671-de4c-4031-bfd3-d6506757bb09",
+      "name": "Peachs",
+      "categoryId": "1"
+    },
+    {
+      "id": "2e6e4837-90bc-471f-ba03-9dfe23ae865c",
+      "name": "Onions",
+      "categoryId": "2"
+    }
+  ],
+  "inventory": [
+    {
+      "id": "c5b0df78-91c3-463b-a720-338d2b53a87e",
+      "quantity": 2,
+      "lastUpdated": "2026-01-23T16:07:34.807Z"
+    },
+    {
+      "id": "5ed7517c-c332-451d-9ed0-fb2630b9e36a",
+      "quantity": 2,
+      "lastUpdated": "2026-01-23T16:07:34.811Z"
+    },
+    {
+      "id": "79395170-bddd-46f6-87a9-ab8bd56c76d8",
+      "quantity": 5,
+      "expiryDate": "2026-02-07",
+      "lastUpdated": "2026-01-24T11:43:05.676Z"
+    },
+    {
+      "id": "df9dbef6-e681-4307-b756-6ecda992a500",
+      "quantity": 5,
+      "lastUpdated": "2026-01-24T11:51:45.738Z"
+    },
+    {
+      "id": "a7e701fb-9d98-47db-b16a-ffb60253ad47",
+      "quantity": 0,
+      "expiryDate": "2026-02-04",
+      "lastUpdated": "2026-01-25T09:50:40.462Z"
+    },
+    {
+      "id": "99fc08cf-4065-47c2-a6e4-36d1d22dad63",
+      "quantity": 0,
+      "lastUpdated": "2026-01-24T18:37:50.848Z"
+    },
+    {
+      "id": "6acd7480-839b-4cbb-aae6-576ecc7450b9",
+      "quantity": 0,
+      "lastUpdated": "2026-01-23T16:21:17.679Z"
+    },
+    {
+      "id": "f3972209-7edc-4980-9293-b76384c9e3ca",
+      "quantity": 0,
+      "lastUpdated": "2026-01-24T18:47:29.269Z"
+    },
+    {
+      "id": "9ebf7ade-3761-4ef6-b513-846f6596862d",
+      "quantity": 0,
+      "expiryDate": "2026-01-28",
+      "lastUpdated": "2026-01-25T09:50:52.537Z"
+    },
+    {
+      "id": "8d987ca6-47e8-4769-9fd9-458c9280460a",
+      "quantity": 6,
+      "expiryDate": "2026-02-07",
+      "lastUpdated": "2026-01-26T09:07:53.818Z"
+    },
+    {
+      "id": "34f7e7ec-21e5-403d-8f3d-9e6e2fe31093",
+      "quantity": 4,
+      "lastUpdated": "2026-01-24T12:00:50.856Z"
+    },
+    {
+      "id": "4dcda8d5-2340-406d-b1ab-62cbf96078cc",
+      "quantity": 6,
+      "lastUpdated": "2026-01-24T18:45:16.863Z"
+    },
+    {
+      "id": "5fa74019-3c04-4066-a18e-4a6a438298e4",
+      "quantity": 1,
+      "lastUpdated": "2026-01-24T18:15:04.023Z"
+    },
+    {
+      "id": "ea7581a9-4120-429a-8a71-cfce1683d3ab",
+      "quantity": 5,
+      "lastUpdated": "2026-01-24T18:47:24.543Z"
+    },
+    {
+      "id": "5b4201d0-b391-4d49-9f16-b61b7ae8d2c7",
+      "quantity": 0,
+      "lastUpdated": "2026-01-25T09:49:42.150Z"
+    },
+    {
+      "id": "b8b88671-de4c-4031-bfd3-d6506757bb09",
+      "quantity": 3,
+      "lastUpdated": "2026-01-24T18:33:49.046Z"
+    },
+    {
+      "id": "2e6e4837-90bc-471f-ba03-9dfe23ae865c",
+      "quantity": 1,
+      "lastUpdated": "2026-01-24T18:33:38.563Z"
+    }
+  ],
+  "shoplist": [
+    {
+      "id": "b8b88671-de4c-4031-bfd3-d6506757bb09",
+      "quantity": 2,
+      "checked": false
+    },
+    {
+      "id": "99fc08cf-4065-47c2-a6e4-36d1d22dad63",
+      "quantity": 2,
+      "checked": false
+    },
+    {
+      "id": "5b4201d0-b391-4d49-9f16-b61b7ae8d2c7",
+      "quantity": 0,
+      "checked": false
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "name": "Fruits",
+      "icon": "🍎"
+    },
+    {
+      "id": "2",
+      "name": "Fresh Vegetables",
+      "icon": "🥦"
+    },
+    {
+      "id": "3",
+      "name": "Dairy",
+      "icon": "🥛"
+    },
+    {
+      "id": "4",
+      "name": "Meat",
+      "icon": "🥩"
+    },
+    {
+      "id": "5",
+      "name": "Grains",
+      "icon": "🌾"
+    },
+    {
+      "id": "d6130e58-b4b7-4d8b-abc0-72c5a2557ce1",
+      "name": "Fish",
+      "icon": "🐟"
+    },
+    {
+      "id": "3272fb02-a042-44b2-8f0b-b3354ae1d6af",
+      "name": "Cans grain",
+      "icon": "🥫"
+    },
+    {
+      "id": "e43b2644-a7a1-468c-a542-5587b74141b0",
+      "name": "Frozen Vegetables",
+      "icon": "🥶🫛"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+.container{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center
+}
+
+article{
+  width: 96%;
+  height: 100%;
+}
+
+footer{
+  margin-top: 30px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+
+  button {
+    width: 92%;
+    height: 30px;
+  }
+  .right{
+    width: 92%;
+    display: flex;
+    justify-content: flex-end;
+
+  }
+}

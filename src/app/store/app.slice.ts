@@ -1,13 +1,17 @@
-import { ProductViewModel } from "../services/products.service";
+import { Category, Inventory, Product } from "../models/pantry.models";
 
 export interface PantrySlice{
-  pantryId: string | null;
-  pantryName: string | null;
-  products: ProductViewModel[];
+  searchQuery: string;
+  products: Record<string, Product>;
+  inventory: Record<string, Inventory>;
+  categories: Record<string, Category>;
+  isBusy: boolean;
 }
 
 export const initialPantrySlice: PantrySlice = {
-  pantryId: 'my_pantry',
-  pantryName: 'My Pantry',
-  products: []
+  searchQuery: '',
+  products: {},
+  inventory: {},
+  categories: {},
+  isBusy: false,
 };

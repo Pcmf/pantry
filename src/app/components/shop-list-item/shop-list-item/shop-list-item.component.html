@@ -1,0 +1,28 @@
+@let product = item();
+<div class="product">
+
+    <!--Icon-->
+    <div class="icon">
+      {{ product.icon }}
+    </div>
+
+    <!-- Product Info -->
+    <div class="info">
+      <div class="name">{{ product.name }}</div>
+      <div class="quantity">
+        Qty: <strong>{{ product.pantryQuantity }}</strong>
+      </div>
+    </div>
+
+    <!-- ShopList area -->
+    <div class="shop-list">
+      <app-quantity-form
+        [quantity]="product.quantity"
+        (changeQuantity)="toggleQuantity($event)"
+        [disableAll]="!!product.checked">
+      </app-quantity-form>
+    </div>
+
+    <input type="checkbox" [checked]="!!product.checked ? 'checked' : ''" (change)="toggleChecks.emit(product.id)">
+
+</div>

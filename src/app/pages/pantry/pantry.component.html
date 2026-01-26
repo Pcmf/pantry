@@ -1,8 +1,14 @@
-@let products = store.products();
-@for (item of products; track item.id) {
-<app-product [item]="item" (edit)="onEdit($event)"></app-product>
-}
-
-<div class="add-product">
-<button (click)="addNewProduct()">Add product</button>
+<div class="container">
+  @let products = store.productsView();
+  @for (item of products; track item.id) {
+    <article>
+      <app-product
+        [product]="item"
+        [shopList]="shopListStore.items()"
+        (changeShopListQuantity)="shopListStore.changeQuantity(item, $event)"
+        (edit)="onEdit($event)"
+        (takeOutProduct)="onTakeOut(item)"
+      ></app-product>
+    </article>
+  }
 </div>
