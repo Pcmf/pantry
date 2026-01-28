@@ -1,7 +1,7 @@
 import { patchState, signalStore, withComputed, withHooks, withMethods, withState } from "@ngrx/signals";
 import { initialPantrySlice, PantrySlice } from "./app.slice";
 import { rxMethod } from "@ngrx/signals/rxjs-interop";
-import { exhaustMap, forkJoin, mergeMap, pipe, switchMap, tap } from "rxjs";
+import { forkJoin, mergeMap, pipe, switchMap, tap } from "rxjs";
 import { tapResponse } from "@ngrx/operators";
 import { computed, inject } from "@angular/core";
 import { PantryService } from "../pantry-services/pantry.service";
@@ -158,20 +158,20 @@ export const AppStore = signalStore(
       )
     ),
 
-    addToShoppingList(product: ProductViewModel) {
-      _pantryService.addShopListItem({
-        id: product.id,
-        quantity: 1,
-        checked: false
-      }).subscribe();
-    },
-    markAsBought(id: string) {
-      _pantryService.updateShopListItem({  // not correct
-        id: id,
-        quantity: 0,
-        checked: true
-      }).subscribe();
-    },
+    // addToShoppingList(product: ProductViewModel) {
+    //   _pantryService.addShopListItem({
+    //     id: product.id,
+    //     quantity: 1,
+    //     checked: false
+    //   }).subscribe();
+    // },
+    // markAsBought(id: string) {
+    //   _pantryService.updateShopListItem({  // not correct
+    //     id: id,
+    //     quantity: 0,
+    //     checked: true
+    //   }).subscribe();
+    // },
     setSearchQuery(query: string) {
       patchState(store, { searchQuery: query });
     },
