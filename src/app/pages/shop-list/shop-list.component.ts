@@ -3,6 +3,7 @@ import { ShopListItemComponent } from '../../components/shop-list-item/shop-list
 import { ShopListStore } from './store/shopListStore';
 import { ShopListViewModel } from './store/shop-list.vm';
 import { AppStore } from '../../store/app.store';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-shop-list',
@@ -15,6 +16,9 @@ import { AppStore } from '../../store/app.store';
 export class ShopListComponent {
   readonly shopListStore = inject(ShopListStore);
   readonly appStore = inject(AppStore);
+  readonly location = inject(Location);
+
+
 
   changeQuantity({
     product,
@@ -35,7 +39,7 @@ export class ShopListComponent {
   }
 
   done() {
-    // update the pantry products list with the quantity o shop list
+    // update the pantry products list with the quantity on shop list
     this.shopListStore.items().map((item) => {
       if (item.checked) {
         const product = this.appStore
@@ -48,5 +52,6 @@ export class ShopListComponent {
         this.shopListStore.removeFromList(item.id);
       }
     });
+    this.location.back();
   }
 }

@@ -89,13 +89,13 @@
   "inventory": [
     {
       "id": "c5b0df78-91c3-463b-a720-338d2b53a87e",
-      "quantity": 8,
-      "lastUpdated": "2026-01-28T09:54:58.538Z"
+      "quantity": 2,
+      "lastUpdated": "2026-01-28T10:46:53.516Z"
     },
     {
       "id": "5ed7517c-c332-451d-9ed0-fb2630b9e36a",
-      "quantity": 3,
-      "lastUpdated": "2026-01-28T09:47:36.242Z"
+      "quantity": 2,
+      "lastUpdated": "2026-01-28T10:46:53.525Z"
     },
     {
       "id": "79395170-bddd-46f6-87a9-ab8bd56c76d8",
@@ -119,8 +119,8 @@
     },
     {
       "id": "6acd7480-839b-4cbb-aae6-576ecc7450b9",
-      "quantity": 6,
-      "lastUpdated": "2026-01-28T09:54:58.542Z"
+      "quantity": 2,
+      "lastUpdated": "2026-01-28T10:46:53.521Z"
     },
     {
       "id": "f3972209-7edc-4980-9293-b76384c9e3ca",
@@ -179,13 +179,7 @@
       "lastUpdated": "2026-01-27T09:10:01.635Z"
     }
   ],
-  "shoplist": [
-    {
-      "id": "c5b0df78-91c3-463b-a720-338d2b53a87e",
-      "quantity": 1,
-      "checked": false
-    }
-  ],
+  "shoplist": [],
   "categories": [
     {
       "id": "1",

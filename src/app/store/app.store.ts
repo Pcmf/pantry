@@ -1,7 +1,7 @@
 import { patchState, signalStore, withComputed, withHooks, withMethods, withState } from "@ngrx/signals";
 import { initialPantrySlice, PantrySlice } from "./app.slice";
 import { rxMethod } from "@ngrx/signals/rxjs-interop";
-import { forkJoin, pipe, switchMap, tap } from "rxjs";
+import { exhaustMap, forkJoin, mergeMap, pipe, switchMap, tap } from "rxjs";
 import { tapResponse } from "@ngrx/operators";
 import { computed, inject } from "@angular/core";
 import { PantryService } from "../pantry-services/pantry.service";
@@ -115,7 +115,7 @@ export const AppStore = signalStore(
    addToInventory: rxMethod<{ product: ProductViewModel, quantity: number }>(
       pipe(
         tap(() => patchState(store, { isBusy: true })),
-        switchMap(({ product, quantity }) =>
+        mergeMap(({ product, quantity }) =>
           _pantryService.updateInventory({
             id: product.id,
             quantity: product.quantity + quantity,
