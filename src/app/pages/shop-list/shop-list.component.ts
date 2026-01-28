@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ShopListItemComponent } from '../../components/shop-list-item/shop-list-item/shop-list-item.component';
 import { ShopListStore } from './store/shopListStore';
 import { ShopListViewModel } from './store/shop-list.vm';
@@ -9,13 +9,14 @@ import { AppStore } from '../../store/app.store';
   imports: [ShopListItemComponent],
   templateUrl: './shop-list.component.html',
   styleUrl: './shop-list.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ShopListStore],
 })
 export class ShopListComponent {
   readonly shopListStore = inject(ShopListStore);
   readonly appStore = inject(AppStore);
 
-  toggleQuantity({
+  changeQuantity({
     product,
     quantity,
   }: {
@@ -39,8 +40,11 @@ export class ShopListComponent {
       if (item.checked) {
         const product = this.appStore
           .productsView()
-          .find((product) => product.id === item.id);
-        this.appStore.addToInventory(product!);
+          .find((product) => product.id === item.id)!;
+        this.appStore.addToInventory(
+          {product,
+          quantity: item.quantity}
+        );
         this.shopListStore.removeFromList(item.id);
       }
     });

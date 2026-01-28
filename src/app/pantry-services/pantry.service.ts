@@ -51,7 +51,7 @@ export class PantryService {
       tapResponse({
         next: () => this.updateInventory({
           id: product.id,
-          quantity: quantity,
+          quantity: product.quantity + quantity,
           expiryDate: product.expiryDate,
           lastUpdated: new Date()
         }).subscribe(),

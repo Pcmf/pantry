@@ -89,62 +89,62 @@
   "inventory": [
     {
       "id": "c5b0df78-91c3-463b-a720-338d2b53a87e",
-      "quantity": 2,
-      "lastUpdated": "2026-01-23T16:07:34.807Z"
+      "quantity": 8,
+      "lastUpdated": "2026-01-28T09:54:58.538Z"
     },
     {
       "id": "5ed7517c-c332-451d-9ed0-fb2630b9e36a",
-      "quantity": 2,
-      "lastUpdated": "2026-01-23T16:07:34.811Z"
+      "quantity": 3,
+      "lastUpdated": "2026-01-28T09:47:36.242Z"
     },
     {
       "id": "79395170-bddd-46f6-87a9-ab8bd56c76d8",
-      "quantity": 5,
+      "quantity": 4,
       "expiryDate": "2026-02-07",
-      "lastUpdated": "2026-01-24T11:43:05.676Z"
+      "lastUpdated": "2026-01-28T09:16:15.918Z"
     },
     {
       "id": "df9dbef6-e681-4307-b756-6ecda992a500",
-      "quantity": 5,
-      "lastUpdated": "2026-01-24T11:51:45.738Z"
+      "quantity": 1,
+      "lastUpdated": "2026-01-28T09:25:12.891Z"
     },
     {
       "id": "a7e701fb-9d98-47db-b16a-ffb60253ad47",
-      "quantity": 0,
-      "expiryDate": "2026-02-04",
-      "lastUpdated": "2026-01-25T09:50:40.462Z"
+      "quantity": 2,
+      "lastUpdated": "2026-01-26T23:00:09.474Z"
     },
     {
       "id": "99fc08cf-4065-47c2-a6e4-36d1d22dad63",
-      "quantity": 0,
-      "lastUpdated": "2026-01-24T18:37:50.848Z"
+      "quantity": 3
     },
     {
       "id": "6acd7480-839b-4cbb-aae6-576ecc7450b9",
-      "quantity": 0,
-      "lastUpdated": "2026-01-23T16:21:17.679Z"
+      "quantity": 6,
+      "lastUpdated": "2026-01-28T09:54:58.542Z"
     },
     {
       "id": "f3972209-7edc-4980-9293-b76384c9e3ca",
-      "quantity": 0,
-      "lastUpdated": "2026-01-24T18:47:29.269Z"
+      "quantity": 10,
+      "expiryDate": "2026-02-03",
+      "lastUpdated": "2026-01-27T09:10:32.363Z"
     },
     {
       "id": "9ebf7ade-3761-4ef6-b513-846f6596862d",
-      "quantity": 0,
+      "quantity": 3,
       "expiryDate": "2026-01-28",
-      "lastUpdated": "2026-01-25T09:50:52.537Z"
+      "lastUpdated": "2026-01-27T11:10:26.604Z"
     },
     {
       "id": "8d987ca6-47e8-4769-9fd9-458c9280460a",
-      "quantity": 6,
+      "quantity": 5,
       "expiryDate": "2026-02-07",
-      "lastUpdated": "2026-01-26T09:07:53.818Z"
+      "lastUpdated": "2026-01-26T22:35:22.052Z"
     },
     {
       "id": "34f7e7ec-21e5-403d-8f3d-9e6e2fe31093",
       "quantity": 4,
-      "lastUpdated": "2026-01-24T12:00:50.856Z"
+      "expiryDate": "2026-02-05",
+      "lastUpdated": "2026-01-27T20:12:16.003Z"
     },
     {
       "id": "4dcda8d5-2340-406d-b1ab-62cbf96078cc",
@@ -153,8 +153,8 @@
     },
     {
       "id": "5fa74019-3c04-4066-a18e-4a6a438298e4",
-      "quantity": 1,
-      "lastUpdated": "2026-01-24T18:15:04.023Z"
+      "quantity": 3,
+      "lastUpdated": "2026-01-27T09:09:18.282Z"
     },
     {
       "id": "ea7581a9-4120-429a-8a71-cfce1683d3ab",
@@ -163,34 +163,26 @@
     },
     {
       "id": "5b4201d0-b391-4d49-9f16-b61b7ae8d2c7",
-      "quantity": 0,
-      "lastUpdated": "2026-01-25T09:49:42.150Z"
+      "quantity": 5,
+      "lastUpdated": "2026-01-28T09:16:15.915Z"
     },
     {
       "id": "b8b88671-de4c-4031-bfd3-d6506757bb09",
-      "quantity": 3,
-      "lastUpdated": "2026-01-24T18:33:49.046Z"
+      "quantity": 4,
+      "expiryDate": "2026-01-29",
+      "lastUpdated": "2026-01-27T09:10:17.836Z"
     },
     {
       "id": "2e6e4837-90bc-471f-ba03-9dfe23ae865c",
-      "quantity": 1,
-      "lastUpdated": "2026-01-24T18:33:38.563Z"
+      "quantity": 10,
+      "expiryDate": "2026-01-30",
+      "lastUpdated": "2026-01-27T09:10:01.635Z"
     }
   ],
   "shoplist": [
     {
-      "id": "b8b88671-de4c-4031-bfd3-d6506757bb09",
-      "quantity": 2,
-      "checked": false
-    },
-    {
-      "id": "99fc08cf-4065-47c2-a6e4-36d1d22dad63",
-      "quantity": 2,
-      "checked": false
-    },
-    {
-      "id": "5b4201d0-b391-4d49-9f16-b61b7ae8d2c7",
-      "quantity": 0,
+      "id": "c5b0df78-91c3-463b-a720-338d2b53a87e",
+      "quantity": 1,
       "checked": false
     }
   ],

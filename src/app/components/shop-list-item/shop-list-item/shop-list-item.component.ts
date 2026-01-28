@@ -24,10 +24,10 @@ export class ShopListItemComponent {
   readonly shopListStore = inject(ShopListStore);
 
   readonly item = input.required<ShopListViewModel>();
-  readonly toggleQty = output<ToggleQuantity>();
+  readonly changeQty = output<ToggleQuantity>();
   readonly toggleChecks = output<string>();
 
-  toggleQuantity(quantity: number) {
-    this.toggleQty.emit({ product: this.item(), quantity });
+  changeQuantity(quantity: number) {
+    this.changeQty.emit({product: this.item(), quantity});
   }
 }

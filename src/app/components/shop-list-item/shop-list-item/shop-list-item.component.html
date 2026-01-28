@@ -18,7 +18,7 @@
     <div class="shop-list">
       <app-quantity-form
         [quantity]="product.quantity"
-        (changeQuantity)="toggleQuantity($event)"
+        (changeQuantity)="changeQuantity($event)"
         [disableAll]="!!product.checked">
       </app-quantity-form>
     </div>

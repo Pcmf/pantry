@@ -70,14 +70,11 @@ export const AppStore = signalStore(
                     products: {
                       ...store.products(),
                       [createdProduct.id]: createdProduct
+                    },
+                    inventory: {
+                      ...store.inventory(),
+                      [createdInventory.id]: createdInventory
                     }
-                  }
-                );
-                patchState(store, {
-                  inventory: {
-                    ...store.inventory(),
-                    [createdInventory.id]: createdInventory
-                  }
                 });
               },
               error: (error) => console.log('Error adding product', error)
@@ -115,11 +112,16 @@ export const AppStore = signalStore(
       )
     ),
 
-   addToInventory: rxMethod<{ id: string; quantity: number }>(
+   addToInventory: rxMethod<{ product: ProductViewModel, quantity: number }>(
       pipe(
         tap(() => patchState(store, { isBusy: true })),
-        switchMap(({ id, quantity }) =>
-          _pantryService.updateInventory({ id, quantity }).pipe(
+        switchMap(({ product, quantity }) =>
+          _pantryService.updateInventory({
+            id: product.id,
+            quantity: product.quantity + quantity,
+            expiryDate: product?.expiryDate,
+            lastUpdated: new Date()
+          }).pipe(
             tapResponse({
               next: (inv) => patchState(store, {
                 inventory: {

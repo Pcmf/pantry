@@ -14,7 +14,7 @@ export interface Inventory {
   id: string;
   quantity: number;
   expiryDate?: Date;
-  lastUpdated?: Date;
+  lastUpdated: Date;
 }
 
 export interface ShopList {

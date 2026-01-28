@@ -2,16 +2,17 @@ import { Category, Inventory, Product, ProductViewModel } from "../models/pantry
 
 export function buildProductsViewModel(
   products: Product[],
-  iventory: Inventory[],
+  inventory: Inventory[],
   categories: Category[],
   searchQuery: string
 ): ProductViewModel[] {
+  console.log('buildProductsViewModel')
   let filteredProducts = [...products];
   if (searchQuery) {
     filteredProducts = products.filter(product => product.name.toLowerCase().includes(searchQuery.toLowerCase()));
   }
     return filteredProducts.map(product => {
-      const inventoryItem = iventory.find(item => item.id === product.id);
+      const inventoryItem = inventory.find(item => item.id === product.id);
       const category = categories.find(cat => cat.id === product.categoryId);
 
       return {
