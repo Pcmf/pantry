@@ -91,7 +91,11 @@ export const AppStore = signalStore(
         switchMap(({ product, quantity = 0 }) =>
           forkJoin(
             {
-              updatedProduct: _pantryService.updateProduct(product, quantity),
+              updatedProduct: _pantryService.updateProduct({
+                  id: product.id,
+                  name: product.name,
+                  categoryId: product.categoryId,
+              }),
               updatedInventory: _pantryService.updateInventory({
                 id: product.id,
                 quantity: quantity,
@@ -156,20 +160,6 @@ export const AppStore = signalStore(
       )
     ),
 
-    // addToShoppingList(product: ProductViewModel) {
-    //   _pantryService.addShopListItem({
-    //     id: product.id,
-    //     quantity: 1,
-    //     checked: false
-    //   }).subscribe();
-    // },
-    // markAsBought(id: string) {
-    //   _pantryService.updateShopListItem({  // not correct
-    //     id: id,
-    //     quantity: 0,
-    //     checked: true
-    //   }).subscribe();
-    // },
     setSearchQuery(query: string) {
       patchState(store, { searchQuery: query });
     },

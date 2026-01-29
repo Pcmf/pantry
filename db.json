@@ -84,6 +84,14 @@
       "id": "2e6e4837-90bc-471f-ba03-9dfe23ae865c",
       "name": "Onions",
       "categoryId": "2"
+    },
+    {
+      "id": "5c6cc5a9-667f-4c08-a446-c378bae19f59",
+      "name": "Oranges",
+      "quantity": 2,
+      "categoryId": "1",
+      "categoryIcon": "🍎",
+      "lastUpdated": "2026-01-29T12:24:31.306Z"
     }
   ],
   "inventory": [
@@ -94,9 +102,8 @@
     },
     {
       "id": "5ed7517c-c332-451d-9ed0-fb2630b9e36a",
-      "quantity": 3,
-      "expiryDate": "2026-01-29",
-      "lastUpdated": "2026-01-28T11:03:42.272Z"
+      "quantity": 0,
+      "lastUpdated": "2026-01-29T10:26:45.387Z"
     },
     {
       "id": "79395170-bddd-46f6-87a9-ab8bd56c76d8",
@@ -106,8 +113,9 @@
     },
     {
       "id": "df9dbef6-e681-4307-b756-6ecda992a500",
-      "quantity": 1,
-      "lastUpdated": "2026-01-28T09:25:12.891Z"
+      "quantity": 2,
+      "expiryDate": "2026-01-31",
+      "lastUpdated": "2026-01-29T12:24:19.527Z"
     },
     {
       "id": "a7e701fb-9d98-47db-b16a-ffb60253ad47",
@@ -120,8 +128,8 @@
     },
     {
       "id": "6acd7480-839b-4cbb-aae6-576ecc7450b9",
-      "quantity": 2,
-      "lastUpdated": "2026-01-28T10:46:53.521Z"
+      "quantity": 3,
+      "lastUpdated": "2026-01-29T10:27:50.818Z"
     },
     {
       "id": "f3972209-7edc-4980-9293-b76384c9e3ca",
@@ -178,15 +186,14 @@
       "quantity": 10,
       "expiryDate": "2026-01-30",
       "lastUpdated": "2026-01-27T09:10:01.635Z"
-    }
-  ],
-  "shoplist": [
+    },
     {
-      "id": "6acd7480-839b-4cbb-aae6-576ecc7450b9",
-      "quantity": 1,
-      "checked": false
+      "id": "5c6cc5a9-667f-4c08-a446-c378bae19f59",
+      "quantity": 2,
+      "lastUpdated": "2026-01-29T12:24:40.997Z"
     }
   ],
+  "shoplist": [],
   "categories": [
     {
       "id": "1",

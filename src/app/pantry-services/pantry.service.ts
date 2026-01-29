@@ -1,8 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
-import { Category, Inventory, Product, ProductViewModel, ShopList } from "../models/pantry.models";
-import { Observable } from "rxjs";
-import { tapResponse } from "@ngrx/operators";
+import { Category, Inventory, Product, ShopList } from "../models/pantry.models";
+import { delay, Observable } from "rxjs";
 
 export interface EnvironmentType {
   url: string;
@@ -17,49 +16,20 @@ export class PantryService {
 
   readonly environment: EnvironmentType = { url: 'http://localhost:3000' };
 
+  // Products
   getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.environment.url}/products`)!;
+    return this.http.get<Product[]>(`${this.environment.url}/products`).pipe(delay(2000));
   }
 
   addProduct(product: Product) {
-    const _product = {
-      id: product.id,
-      name: product.name,
-      categoryId: product.categoryId,
-    };
-    // const _expiryDate = product?.expiryDate ?? undefined;
-    return this.http.post<Product>(`${this.environment.url}/products`, _product);
-      // tapResponse({
-      //   next: (product: Product) => this.addInventory({
-      //     id: product.id,
-      //     quantity: quantity,
-      //     expiryDate: _expiryDate,
-      //     lastUpdated: new Date()
-      //   }).subscribe(),
-      //   error: (error) => console.log('Error adding product', error)
-      // })
-    // );
+    return this.http.post<Product>(`${this.environment.url}/products`, product);
   }
 
-  updateProduct(product: ProductViewModel, quantity: number) {
-    const _product = {
-      id: product.id,
-      name: product.name,
-      categoryId: product.categoryId,
-    };
-    return this.http.put<Product>(`${this.environment.url}/products/${_product.id}`, _product).pipe(
-      tapResponse({
-        next: () => this.updateInventory({
-          id: product.id,
-          quantity: product.quantity + quantity,
-          expiryDate: product.expiryDate,
-          lastUpdated: new Date()
-        }).subscribe(),
-        error: (error) => console.log('Error updating product', error)
-      })
-    );
+  updateProduct(product: Product) {
+    return this.http.put<Product>(`${this.environment.url}/products/${product.id}`, product);
   }
 
+  // Inventory
   getInventory(): Observable<Inventory[]> {
     return this.http.get<Inventory[]>(`${this.environment.url}/inventory`)!;
   }
@@ -70,9 +40,6 @@ export class PantryService {
   updateInventory(product: Inventory) {
     return this.http.put<Inventory>(`${this.environment.url}/inventory/${product.id}`, product);
   }
-
-
-
 
 
 
@@ -107,10 +74,4 @@ export class PantryService {
   deleteShopListItem(id: string) {
     return this.http.delete(`${this.environment.url}/shoplist/${id}`);
   }
-  /**
-   * END SHOPLIST
-   */
-
-
-
 }
