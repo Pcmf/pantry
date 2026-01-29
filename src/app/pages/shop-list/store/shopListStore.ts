@@ -50,7 +50,8 @@ export const ShopListStore = signalStore(
               error: (error) => console.log('Error adding to shop list', error)
             })
           )
-      ))
+        )
+      )
     ),
     update: rxMethod<ShopList>(
       pipe(
@@ -77,7 +78,6 @@ export const ShopListStore = signalStore(
       quantity: number
     ) {
       const alreadyInList = store.items().find((item) => item.id === product.id);
-
       if (alreadyInList) {
         this.update({
           id: product.id,

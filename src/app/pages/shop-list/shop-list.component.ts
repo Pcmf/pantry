@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { ShopListItemComponent } from '../../components/shop-list-item/shop-list-item/shop-list-item.component';
+import { ShopListItemComponent, ToggleQuantity } from '../../components/shop-list-item/shop-list-item/shop-list-item.component';
 import { ShopListStore } from './store/shopListStore';
-import { ShopListViewModel } from './store/shop-list.vm';
 import { AppStore } from '../../store/app.store';
 import { Location } from '@angular/common';
 
@@ -19,14 +18,7 @@ export class ShopListComponent {
   readonly location = inject(Location);
 
 
-
-  changeQuantity({
-    product,
-    quantity,
-  }: {
-    product: ShopListViewModel;
-    quantity: number;
-  }) {
+  changeQuantity({product, quantity }: ToggleQuantity) {
     this.shopListStore.changeQuantity(product, quantity);
   }
 

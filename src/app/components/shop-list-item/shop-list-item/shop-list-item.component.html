@@ -23,6 +23,6 @@
       </app-quantity-form>
     </div>
 
-    <input type="checkbox" [checked]="!!product.checked ? 'checked' : ''" (change)="toggleChecks.emit(product.id)">
+    <input type="checkbox" [checked]="product.checked ? 'checked' : '' " (change)="toggleChecks.emit(product.id)">
 
 </div>

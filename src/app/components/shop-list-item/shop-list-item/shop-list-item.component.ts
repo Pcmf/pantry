@@ -8,7 +8,7 @@ import { ShopListStore } from '../../../pages/shop-list/store/shopListStore';
 import { QuantityFormComponent } from '../../quantity-form/quantity-form.component';
 import { ShopListViewModel } from '../../../pages/shop-list/store/shop-list.vm';
 
-interface ToggleQuantity {
+export interface ToggleQuantity {
   product: ShopListViewModel;
   quantity: number;
 };
