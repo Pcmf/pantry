@@ -6,7 +6,6 @@ export function buildProductsViewModel(
   categories: Category[],
   searchQuery: string
 ): ProductViewModel[] {
-  console.log('buildProductsViewModel')
   let filteredProducts = [...products];
   if (searchQuery) {
     filteredProducts = products.filter(product => product.name.toLowerCase().includes(searchQuery.toLowerCase()));

@@ -10,7 +10,7 @@ import { initialShopListSlice } from './shop-list.slice';
 import { ShopListViewModel } from './shop-list.vm';
 import { PantryService } from '../../../pantry-services/pantry.service';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { pipe, switchMap, tap } from 'rxjs';
+import { mergeMap, pipe, switchMap } from 'rxjs';
 import { tapResponse } from '@ngrx/operators';
 import { buildShopListViewModel } from './shop-list.builders';
 import { AppStore } from '../../../store/app.store';
@@ -23,7 +23,6 @@ export const ShopListStore = signalStore(
 
     loadShopList: rxMethod<void>(pipe(
       switchMap(() => api.getShopList().pipe(
-        tap(data => console.log(data)),
         tapResponse({
           next: (shopList) => patchState(store, { items: buildShopListViewModel(shopList, appStore.productsView()) }),
           error: (error) => console.log('Error loading shop list', error)
@@ -87,7 +86,6 @@ export const ShopListStore = signalStore(
         })
       }
       else {
-        console.log('add to shopList', product)
         this.addToShopList(product as ShopListViewModel);
       }
     },
@@ -106,12 +104,22 @@ export const ShopListStore = signalStore(
       }));
     },
 
-    removeFromList(productId: string) {
-      api.deleteShopListItem(productId).subscribe();
-      patchState(store, (state) => ({
-        items: state.items.filter((item) => item.id !== productId),
-      }));
-    },
+    removeFromList: rxMethod<string>(
+      pipe(
+        mergeMap((productId) =>
+          api.deleteShopListItem(productId).pipe(
+            tapResponse({
+              next: () => {
+                patchState(store, (state) => ({
+                  items: state.items.filter((item) => item.id !== productId),
+                }));
+              },
+              error: (error) => console.log('Error removing from shop list', error)
+            })
+          )
+        )
+      )
+    ),
 
     clearList() {
       patchState(store, () => ({

@@ -143,7 +143,7 @@ export const AppStore = signalStore(
           _pantryService.updateInventory({
             id: product.id,
             quantity: Math.max(0, product.quantity - 1),
-            expiryDate: product.expiryDate,
+            expiryDate: product.quantity-1 > 0 ? product.expiryDate : undefined,
             lastUpdated: new Date()
           }).pipe(
             tapResponse({
@@ -152,8 +152,6 @@ export const AppStore = signalStore(
             })
           )
         ),
-        tap(d => console.log('after switchMap',d)),
-
         tap(() => patchState(store, { isBusy: false }))
       )
     ),
